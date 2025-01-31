@@ -5,14 +5,14 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 const config: Config = {
-  title: 'Se não mudar, mamou',
+  title: 'Tools',
   favicon: 'img/firelink.png',
 
   url: 'https://firelink-library.github.io',
-  baseUrl: '/docusaurus-template',
+  baseUrl: '/tools',
 
   organizationName: 'Firelink Library',
-  projectName: 'docusaurus-template',
+  projectName: 'tools',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -57,7 +57,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Template docusaurus',
+      title: 'Tools',
       logo: {
         alt: 'Logo Firelink Lib.',
         src: 'img/firelink.png',
@@ -70,7 +70,7 @@ const config: Config = {
           label: 'Tutorial',
         },
         {
-          href: 'https://github.com/firelink-library/docusaurus-template',
+          href: 'https://github.com/firelink-library/tools',
           label: 'GitHub',
           position: 'right',
         },
