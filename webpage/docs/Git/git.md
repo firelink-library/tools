@@ -50,6 +50,21 @@ sudo apt install base-devel
 
 :::
 
+Se você estiver utilizando outro sistema operacional, como Windows, você pode instalar o Git visitando o [link](https://git-scm.com/downloads/win). O processo de instalação vai ser como de outros aplicativos Windows. Vale destacar o que é instalado com ele:
+
+- `Git` – O próprio sistema de controle de versão Git.
+- `Git Bash` – Um terminal baseado em MinGW que fornece um ambiente similar ao Unix para rodar comandos do Git.
+- `Git CMD` – Um prompt de comando do Windows com suporte ao Git.
+- `Git GUI` – Uma interface gráfica básica para interagir com repositórios Git.
+- `OpenSSH` – Ferramenta para conexões seguras via SSH, necessária para clonar e interagir com repositórios remotos via SSH.
+- `cURL` – Uma ferramenta de linha de comando para transferências de dados via diversos protocolos (HTTP, HTTPS, FTP, etc.).
+- `Credential Manager` – Gerenciador de credenciais para armazenar logins de forma segura no Windows.
+- `Perl (opcional)` – Necessário para alguns scripts avançados do Git.
+- `MinTTY` – Um terminal alternativo usado pelo Git Bash, oferecendo uma experiência aprimorada em relação ao prompt do Windows.
+- `Diff and Merge tools` – Algumas ferramentas básicas para visualizar diferenças entre versões de arquivos.
+
+Alguns terminais podem ser utilizados para acessar o Git. Recomendo utilizar o `Git Bash`, pode ser acessado clicando com o botão direito sobre um diretório e selecionar essa opção.
+
 Agora que temos uma instalação do git, vamos configurá-lo corretamente?
 
 ## 2. Criando uma chave ssh
