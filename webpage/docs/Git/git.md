@@ -63,9 +63,7 @@ Se você estiver utilizando outro sistema operacional, como Windows, você pode 
 - `MinTTY` – Um terminal alternativo usado pelo Git Bash, oferecendo uma experiência aprimorada em relação ao prompt do Windows.
 - `Diff and Merge tools` – Algumas ferramentas básicas para visualizar diferenças entre versões de arquivos.
 
-Alguns terminais podem ser utilizados para acessar o Git. Recomendo utilizar o `Git Bash`, pode ser acessado clicando com o botão direito sobre um diretório e selecionar essa opção.
-
-Agora que temos uma instalação do git, vamos configurá-lo corretamente?
+Alguns terminais podem ser utilizados para acessar o Git. Recomendo utilizar o `Git Bash`, pode ser acessado clicando com o botão direito sobre um diretório e selecionar essa opção. Agora que temos uma instalação do git, vamos configurá-lo corretamente?
 
 ## 2. Criando uma chave ssh
 
@@ -249,4 +247,10 @@ O comando acima configura como editor padrão o **vscode**.
 
 Para saber mais sobre git, leia [esse livro
 gratuito](https://git-scm.com/book/en/v2)
+
+## 5. Alguns Tutoriais em Vídeo
+
+Mas e se eu preferir assistir vídeos? Não tem problema! Seguem alguns tutoriais em vídeo.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6Czd1Yetaac?si=rjoTMPKCZypqMxQD" title="Entendendo GIT | (não é um tutorial!)" frameborder="0" allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
