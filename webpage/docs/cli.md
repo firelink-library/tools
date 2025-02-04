@@ -276,6 +276,7 @@ vamos abordar os seguintes comandos:
 
 * ls
 * cd
+* echo
 * cat
 * touch
 * rm
@@ -323,5 +324,136 @@ uma limitação, considere assistir o vídeo abaixo:
 </div>
 <br/>
 
-A segunda parte é uma imposição mais conceitual e pode ser explicada com um
-exemplo: imagine que você queira 
+A segunda parte é uma imposição puramente conceitual e pode ser explicada com
+um exemplo: imagine que você queira contar, em um arquivo `csv` que consiste na
+lista de alunos de uma turma, quantos deles se chamam "João". Muitas vezes é
+intuitivo imaginar um programa que faça essa tarefa de uma vez só, mas essa
+intuição não se alinha com a filosofia Unix. Nesse caso, seria coerente com
+essa filosofia a utilização de um programa que lê o arquivo de texto em questão
+e serializa o seu conteúdo para que outro programa, cuja função é buscar
+padrões dentro de textos, separe todas as linhas que contenham a *string*
+"João"; aí, enfim, é que utilizamos um terceiro programa para contar quantas
+linhas restaram depois desse filtro inicial. O comando digitado pelo usuário no
+*prompt* seria:
+
+```bash
+cat alunos.csv | grep João | wc -l
+```
+
+O primeiro comando, `cat`, é quem lista como saída o texto contido no arquivo;
+`grep` é o comando responsável por buscar por padrões dentro de um texto e, por
+fim, `wc -l` conta quantas linhas tem o texto de entrada. Do exemplo, resta
+apenas entender o `|`. Trata-se de uma concatenação de entradas e saídas no
+terminal, para que a saída de `cat` sirva como entrada de `grep`, que por sua
+vez tem sua saída encaminhada para a entrada de `wc` que, por fim, tem sua
+saída encaminhada para o `stdout`, que é a saída padrão que vemos no terminal.
+
+A filosofia *Unix* garante, dessa forma, que tenhamos programas simples e
+profundamente reutilizáveis no terminal. Parte da sensação de familiaridade que
+acomete aquele primeiro grupo de desenvolvedores vem do conforto de entender
+ferramentas simples e que *nunca mudam*. Vamos começar a criar o seu arsenal?
+
+Aqui, permitam-me utilizar o nosso amigo *Gepeto* para gerar uma explicação
+rápida de cada um dos comandos que listei. Faço isso não por incapacidade de
+fazê-lo por mim mesmo, mas por dois motivos:
+
+1. Para este tipo de tarefa os chatbots são excelentes. Enquanto tenho
+   restrições com o uso de *IA* generativa para o estudo e prática de conceitos
+   complexos, ela é excelente para sumarizar conteúdos simples como este; e
+2. Como um convite para que use essa mesma ferramenta para compreender e testar
+   mais do que apenas os comandos aqui listados.
+
+Segue, então, a contribuição do nosso recombinador de *tokens* favorito:
+
+1. **ls**: Lista o conteúdo de um diretório.
+- **Explicação**: O comando `ls` é usado para listar o conteúdo de um
+  diretório. Por padrão, é exibido o conteúdo da pasta atual.
+- **Exemplo**:
+  ```sh
+  ls -l # Lista todos os arquivos do diretório atual no formato detalhado (detalhes de permissão, proprietário, tamanho, data).
+  ```
+
+2. **cd**: Altera o diretório atual.
+- **Explicação**: O comando `cd` permite alterar o diretório atual onde o
+  usuário está operando (o diretório de trabalho corrente).
+- **Exemplo**:
+  ```sh
+  cd ~/Downloads/ # Entra na pasta "Downloads" em seu diretório pessoal.
+  cd .. # Volta para o diretório pai.
+  cd /home/user/Documentos/ # Entra diretamente no caminho absoluto.
+  ```
+
+3. **echo**: Imprime uma linha de texto ou variáveis de ambiente.
+- **Explicação**: O comando `echo` exibe uma linha de texto no terminal ou o
+  valor de uma variável. É útil para exibir mensagens ou valores de variáveis.
+- **Exemplo**:
+  ```sh
+  echo "Olá, mundo!" # Mostra "Olá, mundo!" no terminal.
+  echo $USER # Mostra o nome do usuário logado no sistema.
+  ```
+
+4. **cat**: Exibe o conteúdo de arquivos textos.
+- **Explicação**: Este comando é usado para exibir o conteúdo de um arquivo
+  texto na tela. Pode ser combinado com outros comandos como `grep`, `sort`,
+  etc.
+- **Exemplo**:
+  ```sh
+  cat arquivo.txt # Exibe o conteúdo do arquivo "arquivo.txt".
+  cat arquivo.txt > arquivo_backup.txt # Copia o conteúdo de "arquivo.txt" para "arquivo_backup.txt".
+  ```
+
+5. **touch**: Cria arquivos vazios ou atualiza a data de criação/atualização de
+   arquivos.
+- **Explicação**: O comando `touch` cria um arquivo vazio se ele não existir ou
+  atualiza a data de modificação (e de acesso) de arquivos que já existirem.
+- **Exemplo**:
+  ```sh
+  touch novo_arquivo.txt # Cria o arquivo "novo_arquivo.txt" se ele não existir.
+  touch -t 202309150130 arquivo.txt # Define a data e hora do último "touch" do arquivo como 15/09/2023 às 01:30.
+  ```
+
+6. **rm**: Remove um ou mais arquivos.
+- **Explicação**: O comando `rm` apaga um ou mais arquivos, podendo ser
+  utilizado com opções adicionais para remover diretórios, forçar a remoção
+  (ignorando erros), e outras funções.
+- **Exemplo**:
+  ```sh
+  rm velho_arquivo.txt # Remove o arquivo "velho_arquivo.txt".
+  rm -i * # Interativamente remove todos os arquivos no diretório atual.
+  rm -r pasta_completa # Remove a pasta "pasta_completa" e tudo dentro dela.
+  ```
+
+7. **rmdir**: Remove uma pasta vazia.
+- **Explicação**: O comando `rmdir` remove diretórios que estejam vazios. Por
+  definição, ele não pode ser usado para remover diretórios que contenham
+  arquivos ou outros diretórios.
+- **Exemplo**:
+  ```sh
+  rmdir pasta_vazia/ # Remove a pasta "pasta_vazia" se ela estiver vazia.
+  rmdir -p diretorio/subdir # Remove uma árvore de diretórios, desde que todos estejam vazios.
+  ```
+
+8. **mkdir**: Cria uma nova pasta.
+- **Explicação**: O comando `mkdir` cria diretórios na estrutura de arquivos. O
+  comando suporta criar múltiplos diretórios em uma única execução.
+- **Exemplo**:
+  ```sh
+  mkdir nova_pasta # Cria a pasta "nova_pasta".
+  mkdir -p pastas/novas/pastas/nestas # Cria todas as subpastas necessárias.
+  ```
+
+9. **man**: Exibe a documentação detalhada do comando.
+- **Explicação**: O comando `man` exibe a página de manual (manual page) para
+  qualquer comando ou função.
+- **Exemplo**:
+  ```sh
+  man ls # Mostra a documentação completa do comando "ls", incluindo opções e parâmetros.
+  ```
+
+10. **tldr**: Proporciona uma visão simplificada do comando.
+- **Explicação**: O comando `tldr` fornece exemplos simplificados de uso para
+  comandos comumente usados, geralmente focando em cenários do mundo real.
+- **Exemplo**:
+  ```sh
+  tldr cp # Mostra exemplos práticos do comando "cp".
+  ```
