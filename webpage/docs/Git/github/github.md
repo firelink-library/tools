@@ -14,7 +14,7 @@ material aqui.
 ## 1. Utilizando o Github Actions
 
 O GitHub Actions é uma ferramenta de automação que permite configurar fluxos de
-trabalho (workflows) diretamente no seu repositório do Github. A utilizade de
+trabalho (workflows) diretamente no seu repositório do Github. A utilidade de
 criar esses fluxos de trabalho é que eles podem ser executados pelas máquinas
 virtuais do Github de acordo com os gatilhos definidos por você em um arquivo
 de configuração. Isso significa que você pode automatizar tarefas para rodar de
