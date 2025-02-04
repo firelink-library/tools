@@ -42,10 +42,10 @@ sudo apt install git
 
 A maioria das distribuições de Linux oferecem metapacotes que juntam todas as
 ferramentas mais comuns para desenvolvimento de software, bastando um único
-comando para instalá-las. No Ubuntu, esse metapacote se chama `base-devel`.
+comando para instalá-las. No Ubuntu, esse metapacote se chama `build-essential`.
 
 ```bash
-sudo apt install base-devel
+sudo apt install build-essential
 ```
 
 :::
