@@ -221,3 +221,5 @@ linguagem novinha em folha com um conceito bem interessante: o **Nushell**.
 <br/>
 
 ## 4. Comandos mais comuns
+
+Para finalizar este artigo, resta apenas apresentar-lhes 

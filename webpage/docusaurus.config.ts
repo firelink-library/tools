@@ -5,7 +5,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 const config: Config = {
-  title: 'Tools',
+  title: 'Ferramentas',
   favicon: 'img/firelink.png',
 
   url: 'https://firelink-library.github.io',
@@ -67,7 +67,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Material',
         },
         {
           href: 'https://github.com/firelink-library/tools',

@@ -9,18 +9,16 @@ import TabItem from '@theme/TabItem';
 
 # Setup docusaurus V3
 
-Para a documentação do projeto deste módulo, vamos utilizar o
-[docusaurus](https://docusaurus.io/), uma ferramenta capaz de gerar sites
+O [**docusaurus**](https://docusaurus.io/) é uma ferramenta capaz de gerar sites
 estáticos a partir de arquivos `mdx` ou `jsx`. O site criado é perfeito para
 fazer documentações completas e fáceis de navegar. Nesta seção, apresentaremos
 de forma breve o procedimento de setup da sua página utilizando o docusaurus.
 
 Neste tutorial, iremos configurar o projeto padrão do docusaurus e fazer
-algumas alterações para se adequar ao modelo proposto para a documentação do
-curso de Engenharia de Computação do Inteli. O que **não** faremos: configurar
-o deploy automático do docusaurus no Github Pages. Isso será mostrado em outra
-seção deste material. Nesta seção, trabalharemos apenas com o docusaurus em um
-host local.
+algumas alterações para que a página gerada seja **apenas** uma documentação. O
+que **não** faremos: configurar o deploy automático do docusaurus no Github
+Pages. Isso será mostrado em outra seção deste material. Nesta seção,
+trabalharemos apenas com o docusaurus em um host local.
 
 Note que utilizaremos uma estrutura de monorepo para o nosso repositório, o que
 significa que o código-fonte e a estrutura da documentação ficarão no mesmo
@@ -41,7 +39,7 @@ repositorio-do-projeto
 │   ├── apresentacao-final.mp4
 │   └── foto-grupo-apresentacao-final.jpeg
 ├── README.md  # Aqui é a capa do seu projeto. Seguir padrão institucional
-└── LICENSE # Arquivo da licença padrão do Inteli (CC-0)
+└── LICENSE # Arquivo da licença
 
 ```
 
@@ -366,9 +364,8 @@ o arquivo `src/index.js`. Pronto! Eliminamos a página inicial também!
 O docusaurus nos permite editar um arquivo css que serve como referência global
 para todas as páginas `jsx` ou `mdx` criadas em nossa documentação. Isso abre a
 possibilidade para criar todo o tipo de customizações de
-cores/animações/estilo. Vamos apenas adequar o padrão de cores para algo mais
-alinhado com o Inteli. Para isso, edite o arquivo `src/css/custom.css` para que
-fique assim:
+cores/animações/estilo. Vamos apenas modificar um pouco as cores. Para isso,
+edite o arquivo `src/css/custom.css` para que fique assim:
 
 ```css showLineNumbers title="custom.css"
 /**
@@ -407,12 +404,9 @@ fique assim:
 ### 3.2. Modificando o ícone do site
 
 Agora vamos modificar o ícone e o favicon da nossa documentação. Para isso,
-adicione o [logo do
-Inteli](https://github.com/rmnicola/m9-ec-encontros/blob/main/Material/static/img/inteli.svg)
-à sua pasta `static`. Essa pasta é especial no sentido de que ela é colocada na
-base do diretório da sua página estática quando esta é transformada em um
-artefato. Em nosso exemplo, vou assumir que colocamos o arquivo `svg` contendo
-o logo do Inteli em `static/img/inteli.svg`.
+adicione um logo de sua escolha à sua pasta `static`. Essa pasta é especial no
+sentido de que ela é colocada na base do diretório da sua página estática
+quando esta é transformada em um artefato. 
 
 A seguir, vamos editar novamente o arquivo `docusaurus.config.js` para que fique assim:
 
@@ -434,7 +428,7 @@ const config = {
         title: 'My Site',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/inteli.svg',
+          src: 'img/logo.svg',
         },
 ...
 ```
