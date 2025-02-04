@@ -1,7 +1,7 @@
 ---
 title: Configurando o Git
 sidebar_position: 1
-slug: /git2
+slug: /git
 ---
 
 # Configuração do Git
@@ -248,9 +248,108 @@ O comando acima configura como editor padrão o **vscode**.
 Para saber mais sobre git, leia [esse livro
 gratuito](https://git-scm.com/book/en/v2)
 
-## 5. Alguns Tutoriais em Vídeo
+## 5. Algumas Sugestões de Uso
 
-Mas e se eu preferir assistir vídeos? Não tem problema! Seguem alguns tutoriais em vídeo.
+Após a configuração, é possível utilizar o Git para controlar versões de código. O Git é utilizado através do terminal. O terminal é uma interface de linha de comando que permite que comandos sejam executados no computador. O terminal do Git é chamado de `Git Bash`. Ele é uma interface de linha de comando que permite que comandos do Git sejam executados. Além disso, o `Git Bash` possibilita utilizar alguns comandos do Linux no Windows.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6Czd1Yetaac?si=rjoTMPKCZypqMxQD" title="Entendendo GIT | (não é um tutorial!)" frameborder="0" allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+Para iniciar o controle de versão em um repositório, é necessário inicializar o repositório. Isso pode ser feito utilizando o comando `git init`. O comando `git init` cria um repositório Git vazio. O repositório é criado na pasta onde o comando é executado. 
 
+```bash
+git init
+```
+
+:::danger[IMPORTANTE]
+
+Pessoal utilizar o comando `git init` uma vez só. Se o diretório já utilizar o Git como controle de versão, não é necessário iniciar ele novamente.
+
+:::
+
+Após a inicialização do repositório, é possível adicionar arquivos ao repositório. Isso pode ser feito utilizando o comando `git add`. O comando `git add` adiciona arquivos ao repositório. O comando `git add` pode ser utilizado para adicionar um arquivo específico ou todos os arquivos de uma vez. 
+
+```bash
+# Adiciona um arquivo por vez
+git add arquivo1.txt
+# Adiciona todos os arquivos
+git add .
+```
+
+Após adicionar os arquivos ao repositório, é necessário realizar um commit. O commit é uma forma de salvar as mudanças no repositório. O commit é realizado utilizando o comando `git commit`. O comando `git commit` salva as mudanças no repositório. O commit deve ser acompanhado de uma mensagem que descreve as mudanças realizadas. 
+
+```bash
+git commit -m "Mensagem do commit"
+```
+
+:::tip[O que fazer se esquecer de colocar uma mensagem de commit?]
+
+Se você esquecer de adicionar uma mensagem de commit, existe uma forte chance de você fazer uma das perguntas mais comuns do StackOverflow: `como sair do editor VI?`.
+Isso acontece pois você será direcionado para um editor de texto para escrever uma mensagem relacionada aquele commit. Se você não alterou a instalação padrão do Git, o editor padrão é o VI. Um pouco sobre a história do VI pode ser visto neste [link](https://en.wikipedia.org/wiki/Vi_(text_editor)).
+
+Para sair do editor: Aperte `i` no teclado para entrar no modo de inserção e escrever a mensagem de commit, depois pressione a tecla `ESC` e depois o comando `:wq`.
+
+Mais sobre o VI:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-txKSRn0qeA?si=5tPwd06ntojR1WvN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"24px"}}></iframe>
+
+
+:::
+
+Após realizar o commit, é possível enviar as mudanças para um repositório remoto. Isso pode ser feito utilizando o comando `git push`. O comando `git push` envia as mudanças para um repositório remoto. O repositório remoto é um repositório que está em um servidor. O servidor pode ser o Github, o Gitlab ou qualquer outro servidor que utilize o Git. 
+
+```bash
+git push
+```
+
+Para realizar o download das mudanças de um repositório remoto, é possível utilizar o comando `git pull`. O comando `git pull` realiza o download das mudanças de um repositório remoto para a sua versão local. 
+
+```bash
+git pull
+```
+
+Quando desejamos acompanhar o status do repositório, podemos utilizar o comando `git status`. O comando `git status` mostra o status do repositório. Ele mostra quais arquivos foram modificados, quais arquivos foram adicionados e quais arquivos foram removidos. 
+
+```bash
+git status
+```
+
+A utilização do `Git` pode ser extendida para a utilização de branches, que são ramificações do código principal. A utilização de branches permite que diferentes versões do código sejam desenvolvidas ao mesmo tempo. A utilização de branches é muito útil para o desenvolvimento de software.
+
+Para criar uma branch, é necessário utilizar o comando `git branch`. O comando `git branch` cria uma nova branch. 
+
+```bash
+git branch nome-da-branch
+```
+
+Após criar a branch, é necessário mudar para a branch. Isso pode ser feito utilizando o comando `git checkout`. O comando `git checkout` muda para a branch desejada. 
+
+```bash
+git checkout nome-da-branch
+```
+
+Após realizar as mudanças na branch, é necessário realizar um merge. O merge é uma forma de unir duas branches. O merge é realizado utilizando o comando `git merge`. O `git merge` deve ser realizado na branch que receberá as mudanças. 
+
+```bash
+# Mudando para a branch que receberá as mudanças
+git checkout nome-da-branch-que-recebera-mudancas
+# Realizando o merge
+git merge nome-da-branch
+```
+
+Para saber mais sobre a utilização do Git, recomendo fortemente assistir:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ts-H3W1uLMM?si=HLi3X2eQju5IKMc3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"24px"}}></iframe>
+
+
+
+:::danger[Conteúdo Avançado]
+
+Quer conhecer um pouco mais sobre o controle de versão e a história da criação do Git? Recomendo assistir:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6Czd1Yetaac?si=GQpEYzp_o2nt0L9o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+
+> NÃO É UM TUTORIAL, MAS UMA HISTÓRIA SOBRE O GIT.
+
+Para utilizar o Git de forma mais avançada, `NÃO` recomendo de forma alguma iniciar por ele até que vocês estejam confortáveis com o básico. No entanto, para quem já está confortável com o básico, recomendo assistir:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6OokP-NE49k?si=duoEn8VI6zwgVvqb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+
+:::
