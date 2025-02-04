@@ -4,6 +4,11 @@ slug: /github
 sidebar_position: 2
 ---
 
+import Workflow1 from '@site/static/img/workflow1.png'
+import Workflow2 from '@site/static/img/workflow2.png'
+import ConfigPages from '@site/static/img/config_pages.png'
+import PrFix from '@site/static/img/pr_fix.png'
+
 # Entendendo o Github
 
 Por enquanto este material vai focar na utilização do github actions, tomando
@@ -96,7 +101,7 @@ ver os seus efeitos na prática. A imagem a seguir demonstra a execução do
 workflow `Testa o github actions`.
 
 <img 
-  src="img/workflow-run-1.png"
+  src={Workflow1}
   alt="Workflow run 1" 
   style={{ 
     display: 'block',
@@ -164,7 +169,7 @@ Note que agora temos duas etapas na nossa tarefa `verdades`. Primeiro fazemos o
 O resultado do segundo workflow pode ser visto abaixo:
 
 <img 
-  src="img/workflow-run-2.png"
+  src={Workflow2}
   alt="Workflow run 2" 
   style={{ 
     display: 'block',
@@ -192,7 +197,7 @@ Source > Github Actions. A imagem abaixo demonstra o que você deve ver se
 configurou o repositório corretamente para a próxima etapa:
 
 <img 
-  src="img/config-pages.png"
+  src={ConfigPages}
   alt="Config github pages" 
   style={{ 
     display: 'block',
@@ -333,7 +338,7 @@ quebrar a "prod". É assim que desenvolvedores profissionais *deveriam*
 trabalhar.
 
 <img 
-  src="img/pr-fix.png"
+  src={PrFix}
   alt="Testes automatizando salvando prod" 
   style={{ 
     display: 'block',
