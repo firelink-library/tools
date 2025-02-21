@@ -1,9 +1,9 @@
 ---
-title: SQLite
+title: SQLite e Implementações
 sidebar_position: 5
-slug: /sqlite
+slug: /sqlite-intro
 ---
 
-# SQLite
+# SQLite e Implementações
 
 Está seção é dedicada ao estudo da ferramenta SQLite. 
