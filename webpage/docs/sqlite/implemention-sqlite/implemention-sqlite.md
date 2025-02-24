@@ -42,7 +42,7 @@ Primeiro, vamos pensar em um elemento que eu espero que possa ser menos abstrato
 />
 <br/>
 
-Como podemos descrever essa estudante? 
+Como podemos descrever essa estudante? Podemos 
 
 ## 3. Um pouco sobre Entidade e Relacionamentos
 
