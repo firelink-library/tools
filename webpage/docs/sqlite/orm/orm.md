@@ -6,4 +6,4 @@ slug: /orm
 
 LOGO MENOS TEM MATERIAL AQUI!
 
-Por hora, consultar aqui: [https://firelink-library.github.io/tools/orm](https://firelink-library.github.io/tools/orm).
+Por hora, consultar aqui: [https://firelink-library.github.io/tools/sqlite](https://firelink-library.github.io/tools/sqlite).
