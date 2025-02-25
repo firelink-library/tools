@@ -306,6 +306,119 @@ Pessoal está palestra do Richard Hipp traz muitos detalhes de como as informaç
 
 ## 6. O tal do CRUD
 
+Boa, temos até aqui nosso banco e nossas tabelas, vamos falar agora sobre as operações que podemos fazer com eles.
+
+<img 
+  src="https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_99257e2c4240770e6b4bdd406d943ac8.png"
+  alt="I have the data!! Meme."
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '60vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+As operações de CRUD representam as quatro ações fundamentais para manipulação de dados em um sistema ou banco de dados. A sigla deriva do inglês *Create* (criar), *Read* (ler), *Update* (atualizar) e *Delete* (excluir). São elas:
+
+1. ***Create (Criar)***: Incluir novos registros no sistema ou banco de dados.
+2. ***Read (Ler)***: Consultar e recuperar dados existentes.
+3. ***Update (Atualizar)***: Modificar informações de registros já existentes.
+4. ***Delete (Excluir)***: Remover registros que não são mais necessários.
+
+
+Essas operações são importantes pois dão a base para que um sistema possa não só armazenar dados, mas também manter essas informações atualizadas e acessíveis. Isso garante o ciclo de vida completo de um dado dentro de uma aplicação, indo desde a inserção de novas informações até a exclusão de dados obsoletos. Além disso, o CRUD é a base para a maioria das funcionalidades de sistemas de gestão, sites de comércio eletrônico, plataformas de redes sociais e qualquer aplicação que precise gerenciar dados de forma estruturada.
+
+Vamos ver um pouco mais sobre como podemos fazer cada um destas operações.
+
+### 6.1 Create (Criar)
+
+A operação Create é usada para adicionar novos registros ou dados a uma tabela ou coleção. No contexto de um banco de dados, isso é feito com o comando INSERT. Exemplo em SQL:
+
+```sql
+INSERT INTO Estudante (nome, cpf, data_nascimento) 
+VALUES ('João Silva', '123.456.789-00', '2000-01-01');
+```
+
+### 6.2 Read (Ler)
+
+A operação Read é usada para recuperar ou consultar dados existentes em uma tabela ou coleção. No contexto de um banco de dados, isso é feito com o comando SELECT. Exemplo em SQL:
+
+```sql
+SELECT * FROM Estudante WHERE cpf = '123.456.789-00';
+```
+
+### 6.3 Update (Atualizar)
+
+A operação Update é usada para modificar dados existentes em uma tabela ou coleção. No contexto de um banco de dados, isso é feito com o comando UPDATE. Exemplo em SQL:
+
+```sql
+UPDATE Estudante 
+SET nome = 'João da Silva' 
+WHERE cpf = '123.456.789-00';
+```
+
+### 6.4 Delete (Excluir)
+
+A operação Delete é usada para remover registros ou dados de uma tabela ou coleção. No contexto de um banco de dados, isso é feito com o comando DELETE. Exemplo em SQL:
+
+```sql
+DELETE FROM Estudante 
+WHERE cpf = '123.456.789-00';
+```
+
+---
+
+### 6.5 Pensando no nossos dados
+
+Agora vamos pensar no nosso conjunto de dados. Vamos inserir alguns dados nas tabelas para consultarmos posteriormente. Fica como desafio, avaliar os comandos abaixo e verificar o que eles vão fazer. Tente fazer isso antes de executar os comandos. Depois de realizada sua implementação, tente verificar se ele fez o que você imaginou para cada um deles.
+
+```SQL
+INSERT INTO Disciplina (nome, carga_horaria) VALUES
+('Matemática', 60),
+('Português', 50),
+('História', 40),
+('Geografia', 40),
+('Ciências', 50);
+
+INSERT INTO Estudante (nome, cpf, data_nascimento) VALUES
+('Ana Silva', '111.222.333-44', '2005-03-15'),
+('Bruno Oliveira', '222.333.444-55', '2004-07-22'),
+('Carla Santos', '333.444.555-66', '2006-01-10'),
+('Daniel Costa', '444.555.666-77', '2005-11-30'),
+('Eduarda Pereira', '555.666.777-88', '2004-09-05'),
+('Fernando Almeida', '666.777.888-99', '2003-05-12'),
+('Gabriela Rocha', '777.888.999-00', '2004-08-19'),
+('Hugo Martins', '888.999.000-11', '2005-02-25'),
+('Isabela Lima', '999.000.111-22', '2006-06-30'),
+('João Vitor Souza', '000.111.222-33', '2003-12-05'),
+('Karina Fernandes', '111.222.333-43', '2004-04-18'),
+('Lucas Gonçalves', '222.333.444-54', '2005-09-22'),
+('Mariana Castro', '333.444.555-65', '2006-03-14'),
+('Nicolas Ribeiro', '444.555.666-76', '2003-11-08'),
+('Olivia Duarte', '555.666.777-87', '2004-07-01');
+
+INSERT INTO Professor (nome, departamento) VALUES
+('Carlos Mendes', 'Matemática'),
+('Patrícia Alves', 'Letras'),
+('Ricardo Fernandes', 'História'),
+('Sandra Oliveira', 'Ciências'),
+('Prof. Carvalho', 'Ciências'),
+('Utônio', 'Ciências'),
+('Senku Ichigame', 'Ciências'),
+('Cutty Flam Franky', 'Matemática'),
+('Nico Robin', 'Geografia')
+('Tiago Costa', 'Geografia');
+```
+
+:::tip[Para ver em vídeo mais informações]
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/jkEr7vcsjWY?si=eAxFZjLDyly79XTq" title="Operações CRUD no SQL Server - Introdução ao CRUD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+  <br/>
+
+:::
+
 ## 7. Implementando em Python
 
 ## 8. Agora vamos dar uma melhorada
@@ -313,3 +426,21 @@ Pessoal está palestra do Richard Hipp traz muitos detalhes de como as informaç
 ## 9. Revisão tudo
 
 ## 10. Para saber mais
+
+Pessoal aqui eu estou deixando uma sequencia de vídeos que eu acho que são recursos interessantes para aprender SQL e como utilizar ele.
+
+> Nossa Murilão, eu estava acompanhando os commits e vi que esse material ficou pronto antes! Por que isso?
+
+Eu fui montando ele conforme fui vendo alguns recursos que achei bastante interessantes, por isso ele foi nascendo conforme fui encontrando material que eu achei que seria interessante!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zsjvFFKOm3c?si=RNK71PM1fzpWGjwu" title="SQL Explained in 100 Seconds" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+<br/>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xiUTqnI6xk8?si=jr81l1Hn7HlczSpA" title="you need to learn SQL RIGHT NOW!! (SQL Tutorial for Beginners)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+<br/>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yMqldbY2AAg?si=JzloaluW_iVexHIQ" title="Roadmap for Learning SQL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+<br/>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_vxobA36UN4?si=MnglUWioxm9_ituX" title="Learn 12 Basic SQL Concepts in 15 Minutes (project files included!)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+<br/>
