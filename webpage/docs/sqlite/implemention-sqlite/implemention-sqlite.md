@@ -205,7 +205,104 @@ Recomendo muito verificar esse vídeo pessoal, ele traz um resumo do que abordam
 
 Beleza, falamos um monte, mas vamos fazer? Vamos colocar nosso sistema no ar, colocando nossas tabelas ... caramba! Esquecemos de colocar nossas tabelas! Vamos rapidamente escrever elas aqui, depois vamos utilizar o SQL para colocar elas no nosso banco de dados SQLite.
 
+| Tabela - Estudante | Atributo | Tipo do Dado |
+| --- |:---:|:---:|
+| | nome | texto |
+| | cpf | texto |
+| | data_nascimento | data |
 
+| Tabela - Disciplina | Atributo | Tipo do Dado |
+| --- |:---:|:---:|
+| | nome | texto |
+| | carga_horaria | texto |
+
+| Tabela - Professor | Atributo | Tipo do Dado |
+| --- |:---:|:---:|
+| | nome | texto |
+| | departamento | texto |
+
+
+:::note[Pode ser feito de muitas outras formas]
+
+Pessoal acho que nunca é demais chamar a atenção para este ponto: está modelagem e implementação podem ser realizadas de outras formas. Sugiro fortemente que vocês modifiquem esses elementos e façam tais alterações, para ver como o sistema se comporta.
+
+:::
+
+Legal, temos nosso primeiro projeto de tabelas 📅! Agora vamos utilizar o SQL para criar elas!
+
+> Mas Murilão eu não sei SQL!
+
+Calma! Eu vou explicando os comandos conforme formos utilizando eles, aqui em baixo tem mais alguns links caso você deseje estudar mais!
+
+:::tip[Para conhecer mais SQL]
+
+Aqui algumas recomendações para estudar SQL:
+
+- Essa é da Lika (vou adicionar o Github dela aqui): [SQL Murder Mystery](https://mystery.knightlab.com/)
+- Recomendo tanto o material do [Luke Barousse](https://www.youtube.com/@LukeBarousse) quanto do [Alex The Analyst
+](https://www.youtube.com/@AlexTheAnalyst)
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/7mz73uXD9DA?si=TacHMY7iAJLIuSme" title="SQL for Data Analytics - Learn SQL in 4 Hours" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+    <br/>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/OT1RErkfLNQ?si=nAs2IVxxgUtu4Kno" title="Learn SQL Beginner to Advanced in Under 4 Hours" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+    <br/>
+
+:::
+
+Quando trabalhando com SQLite, particularmente gosto de utilizar o [DBeaver](https://dbeaver.io/) para criar e manipular o arquivo do banco. Uma alternativa para não precisar instalar nada no computador, é utilizar o [SQLite Online](https://sqliteonline.com/). 
+Para criar nossas tabelas:
+
+```sql
+CREATE TABLE Estudante(
+	nome VARCHAR(100) NOT NULL,
+  	cpf VARCHAR(15) PRIMARY KEY,
+  	data_nascimento DATE
+);
+
+CREATE TABLE Disciplina(
+	nome VARCHAR(100) NOT NULL,
+  	carga_horaria INTEGER NOT NULL,
+  	id INTEGER PRIMARY KEy AUTOINCREMENT
+);
+
+
+CREATE TABLE Professor(
+	nome VARCHAR(100) NOT NULL,
+  	departamento VARCHAR(100) NOT NULL,
+  	id INTEGER PRIMARY KEy AUTOINCREMENT
+);
+```
+
+Vamos por partes compreender cada um destes elementos:
+
+- ***Estudante***:
+  - `CREATE TABLE Estudante`: Inicia a criação de uma tabela chamada Estudante no banco de dados.
+  - `nome VARCHAR(100) NOT NULL`: nome é o nome da coluna. VARCHAR(100) indica que a coluna armazenará texto com até 100 caracteres (em SQLite, apesar do tipo VARCHAR, internamente o armazenamento é tratado como TEXT, mas a declaração respeita a sintaxe SQL). NOT NULL significa que esse campo não pode receber valores vazios (NULL), obrigando o preenchimento do nome do estudante ao inserir um registro.
+  - `cpf VARCHAR(15) PRIMARY KEY`: cpf é a coluna para armazenar o CPF do estudante. VARCHAR(15) indica um campo de texto com até 15 caracteres (suficiente para representar o formato do CPF, incluindo possíveis traços ou pontos, se necessário). PRIMARY KEY define que essa coluna é a chave primária da tabela, ou seja, cada valor de CPF deve ser único e não pode ser nulo. É por esse campo que os registros serão identificados de forma única.
+  - `data_nascimento DATE`: data_nascimento é a coluna responsável por armazenar a data de nascimento do estudante. DATE indica o tipo de dado de data. Em SQLite, embora o tipo DATE possa ser armazenado como texto, é convencionado que esse campo representará uma data.
+
+- ***Disciplina***:
+  - `CREATE TABLE Disciplina`: Cria a tabela Disciplina no banco de dados.
+  - `nome VARCHAR(100) NOT NULL`: Define a coluna nome para armazenar o nome da disciplina, com até 100 caracteres de texto e que não pode ser nulo (NOT NULL).
+  - `carga_horaria INTEGER NOT NULL`: carga_horaria é uma coluna do tipo numérico (INTEGER), usada para guardar a quantidade de horas de aula ou estudo que a disciplina exige. Também está definida como NOT NULL, ou seja, não pode ficar sem valor.
+  - `id INTEGER PRIMARY KEY AUTOINCREMENT`: id é do tipo inteiro (INTEGER). PRIMARY KEY indica que esta coluna é a chave primária da tabela, garantindo que cada registro em Disciplina seja identificado exclusivamente por esse campo. AUTOINCREMENT faz com que o valor de id seja gerado e incrementado automaticamente pelo banco de dados sempre que um novo registro for inserido. **Observação**: em SQLite, para utilizar o autoincremento de forma apropriada, a coluna com PRIMARY KEY AUTOINCREMENT deve ser do tipo INTEGER.
+
+- ***Professor***:
+  - `CREATE TABLE Professor`: Cria a tabela Professor.
+  - `nome VARCHAR(100) NOT NULL`: Coluna para o nome do professor, até 100 caracteres, não pode ser nula.
+  - `departamento VARCHAR(100) NOT NULL`: Coluna que indica o departamento ao qual o professor está vinculado, também não pode ser nula.
+  - `id INTEGER PRIMARY KEY AUTOINCREMENT`: Coluna inteira que serve como chave primária da tabela, sendo gerada automaticamente (incrementada a cada novo registro).
+
+Ufa! Criamos nossas tabelas! Agora, este arquivo com os nossos dados pode ser baixado o utilizado para acessarmos suas informações. É importante ressaltar um ponto aqui, ainda não temos dados dentro do nosso banco, apenas a sua estrutura.
+
+:::tip[Para saber mais]
+
+Pessoal está palestra do Richard Hipp traz muitos detalhes de como as informações são armazenadas em base de dados SQLite.
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/ZSKLA81tBis?si=PvM1fV7KP7u1stAz" title="SQLite: How it works, by Richard Hipp" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" style={{display:"block", marginLeft:"auto", marginRight:"auto"}} allowfullscreen></iframe>
+  <br/>
+
+:::
 
 ## 6. O tal do CRUD
 
