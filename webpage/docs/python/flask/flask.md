@@ -206,6 +206,50 @@ Agora vamos ajustar nossa aplicação para que ela se comporte como uma API.
 
 Calma! Vamos ver aqui:
 
+Uma API (***Application Programming Interface***) é um conjunto de regras e protocolos que permite que diferentes sistemas ou componentes de software se comuniquem entre si. Ela define como as solicitações e respostas devem ser estruturadas, permitindo que aplicações troquem dados e funcionalidades de maneira padronizada. Por exemplo, quando você usa um aplicativo de previsão do tempo, ele pode usar uma API para buscar dados de um servidor remoto e exibi-los no seu dispositivo.
+
+As APIs são amplamente utilizadas em desenvolvimento web e móvel para integrar serviços externos ou conectar diferentes partes de um sistema. Elas podem ser baseadas em protocolos como HTTP (para APIs RESTful) ou tecnologias como GraphQL. Uma API bem projetada simplifica o desenvolvimento, pois os desenvolvedores não precisam criar funcionalidades do zero, podendo reutilizar serviços já existentes.
+
+Uma API funciona como uma "ponte" entre sistemas, permitindo que eles trabalhem juntos de forma eficiente. Ela é muito utilizada para a integração de serviços modernos, como redes sociais, pagamentos online, mapas e muito mais, tornando-se um pilar da tecnologia atual.
+
+Agora, para nosso código:
+
+```py
+# ola-flask-api.py
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+@app.route("/ping")
+def ping():
+    return "pong"
+
+@app.route('/echo', methods=['POST'])
+def echo():
+   return jsonify(request.json)
+
+@app.route("/soma/<int:a>/<int:b>")
+def soma(a, b):
+    return jsonify({"resultado": a + b})
+
+@app.route("/subtracao/<int:a>/<int:b>")
+def subtracao(a, b):
+    return jsonify({"resultado": a - b})
+
+@app.route("/multiplicacao")
+def multiplicacao():
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    return jsonify({"resultado": a * b})
+
+@app.route("/divisao", methods=["POST"])
+def divisao():
+    dados = request.json
+    a = int(dados.get("a"))
+    b = int(dados.get("b"))
+    return jsonify({"resultado": a / b})
+
+```
 
 ## x. Materiais extras de estudo
 
