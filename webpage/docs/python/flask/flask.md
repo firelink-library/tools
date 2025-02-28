@@ -4,6 +4,10 @@ sidebar_position: 1
 slug: /flask
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## 1. Frame o que?
 
 Pessoal ao longo deste encontro vamos compreender alguns conceitos importantes para o desenvolvimento dos nossos projetos: como construir soluções que possam ser acessadas via web, como criar um servidor e como acessar a aplicação web. Para isso, vamos passar por alguns conceitos fundamentais para depois iniciarmos a construção da nossa aplicação web, utilizando o microframework Flask.
@@ -251,7 +255,332 @@ def divisao():
 
 ```
 
-## x. Materiais extras de estudo
+Nesse ponto, podemos executar nossa aplicação com o comando: 
+
+```sh
+python3 -m flask --app ola-flask-api run --host 0.0.0.0 --port 8000
+```
+
+Um ponto diferente aqui é que nossa aplicação agora possui rotas que podem receber requisições e retornar respostas. Ele não é uma aplicação web tradicional, mas sim uma API, que pode ser acessada por outros sistemas através de requisições HTTP.
+
+> ***IMPORTANTE:*** Uma aplicação pode possuir rotas de API e rotas de aplicação web. As rotas de API são utilizadas para fornecer dados e funcionalidades para outros sistemas, enquanto as rotas de aplicação web são utilizadas para fornecer uma interface interativa para o usuário.
+
+Para testar a nossa aplicação, vamos utilizar o algum cliente para testar API, como [Postman](https://www.postman.com/), [Thunder Client](https://www.thunderclient.com/) ou o [Bruno](https://www.usebruno.com/).
+
+Agora vamos fazer algumas requisições para a nossa aplicação. Primeiro, vamos fazer uma requisição GET para a rota `/ping`. Em seguida, vamos fazer uma requisição POST para a rota `/echo` com o corpo `{"mensagem": "Ola Mundo!!"}`. Por fim, vamos fazer requisições para as rotas `/soma`, `/subtracao`, `/multiplicacao` e `/divisao` com os parâmetros e corpo especificados.
+
+Agora devemos configurar nossa requisição, em especial para qual rota vamos fazer ela. Além da , vale destacar que também devemos configurar outros parâmetros para nossa requisição, como o método HTTP que vamos utilizar, se algum cabeçalho ou corpo da mensagem serão enviados. Vamos testar primeiro a rota `/ping`.
+
+
+Vale observar aqui alguns pontos importantes:
+
+- O método HTTP que foi utilizado foi o `GET`, a requisição foi realizada para a rota `http://localhost:8000/ping`.
+- O servidor respondeu essa requisição com o a mensagem `pong` e com **status code** 200, indicando que ela foi bem sucedida. Para mais mensagens de status do protocolo HTTP, verificar este [link😺](https://http.cat/), ou este [link🐶](https://http.dog/) ou este último por fim [link🛜](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
+
+
+Se modificarmos está requisição para tentar acessar a rota `/echo`. O método chato 🌋!! Na verdade ele está apenas indicando para nós que nossa requisição não tem os parâmetros que ele precisa para conseguir ser realizado com sucesso. Vamos ajustar nossa requisição para que ela possa trazer em seu corpo um mensagem como a rota espera. Para isso, vamos adicionar um `Body` a requisição. O corpo das requisições `POST` não é enviado como os argumentos passados como parâmetros de uma requisição `GET`, por exemplo.
+
+:::danger[Corpo da Requisição]
+
+Mesmo que o conteúdo da requisição seja um JSON, ele não é enviado como um parâmetro da requisição, mas sim como um corpo da requisição. Isso é importante para que o servidor consiga interpretar corretamente a requisição e retornar a resposta esperada. Devemos configurar o `Content-Type` da requisição para `application/json` e o corpo da requisição deve ser um JSON válido.
+
+Ainda assim, isso não faz com que os dados enviados na requisição estejam protegidos por algum tipo de criptográfia, por exemplo. Para isso, devemos utilizar o protocolo HTTPS, que é uma versão segura do protocolo HTTP. Mesmo assim, diversas aplicações ainda utilizando algum algoritmo de criptografia para proteger os dados enviados e recebidos.
+
+Para estudar mais sobre o protocolo HTTP:
+
+<iframe width="600" height="480" max-width="80vw" src="https://www.youtube.com/embed/aumDleTg_UQ?si=S_8iCnSvNKEqwAcD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px'}}></iframe>
+
+<iframe width="600" height="480" max-width="80vw" src="https://www.youtube.com/embed/iYM2zFP3Zn0?si=-2uDhm_PhEKsB0Wk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px'}}></iframe>
+
+:::
+
+Continuando com os testes das nossas rotas, os métodos `soma` e `subtracao` são rotas que recebem parâmetros na URL. Já os métodos `multiplicacao` e `divisao` recebem parâmetros no corpo da requisição. Vamos testar cada uma delas. Primeiro os métodos `soma` e `subtracao`.
+
+Podemos observar que os parâmetros para essas rotas são passados diretamente na URL. Já para a rota `multiplicacao`, os parâmetros devem ser passados como `Query String`, ou seja, como parâmetros passados na URL, mas que não fazem parte da rota. Vamos passar a `Query String` para a rota `multiplicacao`, enviando eles depois da rota, separados por `?` e `&`.
+
+Por fim, a rota `divisao` recebe os parâmetros no corpo da requisição, como um JSON. Vamos configurar a requisição para que ela possa ser realizada com sucesso.
+
+Pessoal, desta forma abordamos diferentes aspectos de uma aplicação web, como ela pode ser construída e como podemos testar ela. Vamos continuar com a construção da nossa aplicação, mas antes, vamos fazer uma pausa para o café ☕☕. Na sequencia, vamos continuar com a construção da nossa aplicação web.
+
+## 5. Construção de uma aplicação web com Flask
+
+Agora, vamos construir nossa aplicação Web utilizando um outro recurso do Flask, os *templates*. Os *templates* são arquivos HTML que contém o código HTML da interface da aplicação. Elas são utilizadas para criar páginas da aplicação que o usuário visualiza, como a página inicial, a página de produtos e a página de checkout. Os *templates* permitem que possamos criar páginas dinâmicas, que podem exibir diferentes conteúdos com base nos dados da aplicação.
+
+Na nossa solução, vamos criar o diretório `templates` e o arquivo `app.py`, na raiz do diretório da solução. Em seguida, vamos adicionar o seguinte código ao arquivo `app.py`:
+
+```python
+# app.py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)
+```
+
+Dentro do diretório `templates`, vamos criar o arquivo `index.html` e adicionar o seguinte código:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minha Aplicação Web</title>
+</head>
+<body>
+    <h1>Ola Mundo!!</h1>
+</body>
+</html>
+```
+
+Como modificamos nosso arquivo `app.py`, vamos executar nossa aplicação com o comando: 
+
+```sh
+`python3 app.py
+```
+Agora, ao acessar a rota `http://localhost:8000`, vamos ver a página `index.html` sendo exibida no navegador.
+
+Mais arquivos e outras rotas podem ser adicionados a aplicação. Vamos adicionar mais uma rota e um arquivo HTML para ela. Vamos criar o arquivo `sobre.html` e adicionar o seguinte código:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sobre</title>
+</head>
+<body>
+    <h1>Sobre</h1>
+    <p>Esta é a página sobre a minha aplicação web.</p>
+</body>
+</html>
+```
+
+E adicionar a rota para a página `sobre.html` no arquivo `app.py`:
+
+```python
+# app.py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/sobre")
+def sobre():
+    return render_template("sobre.html")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)
+```
+
+Agora, ao acessar a rota `http://localhost:8000/sobre`, vamos ver a página `sobre.html` sendo exibida no navegador.
+
+> "Mas Murilão, e se eu quisar passar informações para a página, como eu faço?". Podemos preparar nossa aplicação para receber informações e passar elas para a página. Vamos adicionar um parâmetro para a rota `sobre` e passar ele para a página `sobre.html`. Vamos adicionar o seguinte código ao arquivo `app.py`:
+
+```python
+# app.py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/sobre/<nome>")
+def sobre(nome):
+    return render_template("sobre.html", nome=nome)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)	
+```
+
+Aqui estamos passando um parâmetro para a rota `sobre` e passando ele para a página `sobre.html`. Agora, ao acessar a rota `http://localhost:8000/sobre/Murilão`, vamos ver a página `sobre.html` sendo exibida no navegador com as mensagens: 
+
+> Esta é a página sobre a minha aplicação web.
+> Ola Murilão!!
+
+Para isso, é necessário editar o arquivo `sobre.html`. Vamos adicionar o seguinte código:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sobre</title>
+</head>
+<body>
+    <h1>Sobre</h1>
+    <p>Esta é a página sobre a minha aplicação web.</p>
+    <p>Ola {{ nome }}!!</p>
+</body>
+</html>
+```
+
+> "Calma lá Murilão! Que aconteceu aqui? Tem umas coisas nesse código que não são HTML!" Isso mesmo pessoal, o código que está entre `{{` e `}}` é um código Python que é executado pelo Flask. Esse código é utilizado para passar informações da aplicação para a página. O código `{{ nome }}` é utilizado para exibir o valor da variável `nome` na página. O Flask substitui o código `{{ nome }}` pelo valor da variável `nome` antes de enviar a página para o navegador. Esse tipo de código é chamado de *template tag* e é utilizado para criar páginas dinâmicas com o Flask. Quem quiser saber mais sobre *template tags*, acesse [aqui](https://flask.palletsprojects.com/en/latest/templating/). A biblioteca utilizada para isso é a Jinja2, que é uma biblioteca de *template* para Python. Para conhecer mais sobre a Jinja2, acesse [aqui](https://jinja.palletsprojects.com/en/latest/).
+
+Legal, agora conseguimos ajustar nossa aplicação para que ela possa enviar informações de uma página para outra. Vamos utilizar um `form` para enviar informações da página para a aplicação. Na rota `\`, vamos adicionar um formulário que envia informações para a rota `/sobre`. Vamos adicionar o seguinte código ao arquivo `index.html`:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minha Aplicação Web</title>
+</head>
+<body>
+    <h1>Ola Mundo!!</h1>
+    <form action="/sobre" method="post">
+        <input type="text" name="nome" placeholder="Digite o seu nome">
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
+```
+Se apenas fizermos está modificação, não vamos conseguir enviar as informações para a rota `/sobre`. Isso porque a rota `/sobre` está configurada para receber apenas requisições do tipo `GET`. Vamos ajustar a rota `/sobre` para que ela possa receber requisições do tipo `POST` também. Não vamos deixar de receber requisições do tipo `GET`, mas vamos adicionar a possibilidade de receber requisições do tipo `POST`. Vamos adicionar o seguinte código ao arquivo `app.py`:
+
+```python
+# app.py
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/sobre", methods=["GET", "POST"])
+def sobre(nome=None):
+    if request.method == "POST":
+        nome = request.form.get("nome")
+    return render_template("sobre.html", nome=nome)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)
+```
+
+Aqui tem algumas coisas que valem a pena observar:
+- A função `sobre` agora recebe um parâmetro `nome` com o valor padrão `None`. Isso é feito para que a função possa ser chamada com ou sem o parâmetro `nome`.
+- A função `sobre` verifica o método da requisição utilizando `request.method`. Se o método da requisição for `POST`, a função obtém o valor do campo `nome` do formulário utilizando `request.form.get("nome")`. Se o método da requisição for `GET`, a função utiliza o valor padrão `None` para o parâmetro `nome`.
+- Quando a função `sobre` recebe uma requisição do tipo `GET` apenas, ela retorna a página `sobre.html` com o valor padrão `None` para o parâmetro `nome`.
+
+Agora que já estamos conseguindo enviar informações entre as páginas, vamos adicionar algumas imagens e estilos para a nossa aplicação. Vamos criar o diretório `static` dentro do diretório `projeto-web` e adicionar o arquivo `style.css` e as imagens `logo.png` e `background.png`. Em seguida, vamos adicionar o seguinte código ao arquivo `style.css`:
+
+```css
+/* style.css */
+body {
+    background-image: url("/static/background.png");
+    background-size: cover;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 3em;
+    color: #313131;
+}
+
+form {
+    text-align: center;
+    margin-top: 50px;
+}
+
+input {
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+button {
+    padding: 10px;
+    font-size: 1.5em;
+}
+```
+
+E adicionar o seguinte código ao arquivo `index.html`:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minha Aplicação Web</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" sizes="16x16 32x32 48x48">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Ola Mundo!!</h1>
+    <form action="/sobre" method="post">
+        <input type="text" name="nome" placeholder="Digite o seu nome">
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
+```
+
+Repare que mudamos a aplicação para que ela possa carregar o arquivo `style.css` e as imagens `logo.png` e `background.png`. Para isso, utilizamos a função `url_for` para gerar os URLs dos arquivos estáticos. A função `url_for` é utilizada para gerar URLs para as rotas da aplicação e para os arquivos estáticos. Para conhecer mais sobre a função `url_for`, acesse [aqui](https://flask.palletsprojects.com/en/latest/api/#flask.url_for).
+
+Agora vamos editar que o nosso projeto para que ele possa receber textos de uma página e salve esses dados no banco de dados.
+
+## 6. Deploy da aplicação web
+
+Primeiro vamos compreender o que é o processo de deploy. O deploy é o processo de implantar a aplicação em um servidor de produção. O servidor de produção é um servidor que está configurado para executar a aplicação de forma segura e eficiente. O servidor de produção é utilizado para atender as requisições dos usuários finais e fornecer uma experiência interativa ao usuário. O deploy é um processo crítico que requer planejamento e execução cuidadosa. O deploy é uma parte importante do ciclo de vida da aplicação e deve ser realizado com cuidado e atenção.
+
+> "Nossa Murilão, que monte de palavras bonitas, mas o que elas significam?" Quando temos nossa aplicação, ela está funcionando no nosso computador apenas. Quando vamos colocar a aplicação em produção, nosso objetivo é deixar ela disponível para que outras pessoas possam utilizar nosso sistema.
+
+Primeiro precisamos instalar um servidor WSGI, como o Gunicorn ou o uWSGI. O servidor WSGI é um servidor que executa a aplicação de forma segura e eficiente. Ele é utilizado para atender as requisições dos usuários finais e fornecer uma experiência interativa ao usuário. para saber mais sobre o Gunicorn, acesse [aqui](https://gunicorn.org/). Em seguida, vamos instalar o Gunicorn com o comando `pip install gunicorn`. 
+
+Vamos executar nossa aplicação com o comando `gunicorn projeto-web.app:app`. O comando `gunicorn projeto-web.app:app` é utilizado para executar a aplicação com o Gunicorn. O argumento `projeto-web.app:app` é utilizado para especificar o nome do arquivo que contém a aplicação e o nome da instância da classe `Flask`.
+
+:::danger[Não Compatível com Windows]
+
+O Gunicorn não é compatível com o Windows. Como o processo de deploy, em geral, ocorre em sistemas operacionais Linux, não é um problema para a maioria dos casos. No entanto, se você estiver utilizando o Windows, pode ser necessário utilizar uma máquina virtual ou um contêiner para executar o Gunicorn.
+
+:::
+
+Agora vamos realizar o freeze da nossa aplicação para que possamos criar um arquivo `requirements.txt` com as dependências da nossa aplicação. Para isso, vamos utilizar o comando `pip freeze > requirements.txt`. O comando `pip freeze` é utilizado para listar todas as dependências da aplicação. O operador `>` é utilizado para redirecionar a saída do comando `pip freeze` para o arquivo `requirements.txt`.
+
+Agora vamos criar um arquivo chamado `Procfile` e adicionar o seguinte código:
+
+```txt
+web: gunicorn projeto-web.app:app
+```
+
+O arquivo `Procfile` é utilizado para especificar os comandos que devem ser executados para iniciar a aplicação. O comando `web: gunicorn projeto-web.app:app` é utilizado para iniciar a aplicação com o Gunicorn.
+
+Agora vamos acessar o site [render.com](https://render.com/). Ele vai permitir realizar o deploy da nossa aplicação utilizando o plano gratuito. Vamos criar uma conta no site e seguir as instruções para realizar o deploy da nossa aplicação. Na [página](https://dashboard.render.com/register?next=%2F), escolher uma das formas para realizar o login na plataforma. Uma vez logado na plataforma, vamos escolher a opção `New` e em seguida `Web Service`.
+
+<img src={useBaseUrl("img/deploy-render/inicio-render.png")} alt="Requisição para a rota /echo" style={{ display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px' }} />
+
+Agora vamos selecionar que desejamos realizar o deploy de um repositório do Github. Aqui cabe destacar que pode ser utilizada outra plataforma de versionamento, mas por hora vamos focar no Github.
+
+<img src={useBaseUrl("img/deploy-render/escolhendo-fonte.png")} alt="Requisição para a rota /echo" style={{ display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px' }} />
+
+Agora devemos realizar a escolha do repositório que vamos fazer o deploy. Para este exemplo, vou utilizar o repositório da disciplina.
+
+<img src={useBaseUrl("img/deploy-render/escolha-repositorio.png")} alt="Requisição para a rota /echo" style={{ display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px' }} />
+
+Depois do repositório selecionado, devemos escolher e configurar a *branch* que vamos utilizar para o deploy. Aqui, vamos utilizar a *branch* `main` e vamos configurar a plataforma para realizar o deploy sempre que houver uma alteração na *branch*. Outro ponto importante para se configurar é de onde a aplicação está sendo construída para o deploy. Como nosso repositório não possui apenas a aplicação que queremos fazer o deploy, vamos configurar a plataforma para que ela saiba onde está a aplicação que queremos fazer o deploy.
+
+<img src={useBaseUrl("img/deploy-render/configurando-deploy.png")} alt="Requisição para a rota /echo" style={{ display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px' }} />
+
+Agora vamos configurar para utilizar a instância gratuita da plataforma. Para isso, vamos escolher a opção `Free` e em seguida `Create Web Service`.
+
+<img src={useBaseUrl("img/deploy-render/selecionando-instancia.png")} alt="Requisição para a rota /echo" style={{ display: 'block', marginLeft: 'auto', maxHeight: '80vh', marginRight: 'auto', marginBottom: '16px' }} />
+
+:::danger[Sem Disco de Persistência]
+
+Na versão gratuíta da plataforma, não é possível utilizar um disco de persistência. Isso significa que os dados que são salvos na aplicação não são mantidos entre as execuções da aplicação. Isso é importante e relevante para nossa validação. No formato que estamos trabalhando, atualmente, isso significa que depois de um tempo de execução, nossa aplicação ficará sem seus registros.
+
+:::
+
+Pessoal, desta forma conseguimos realizar o deploy da nossa aplicação. Ela ainda pode ser melhorada com implementação de responsividade, melhoria na interface e na experiência do usuário. A seguir vamos realizar algumas comparações para utilizar a plataforma em conjunto com o robô 🤖.
+
+
+## 7. Materiais extras de estudo
 
 Pessoal aqui vão alguns materiais de apoio que eu utilizei para construir este material:
 
