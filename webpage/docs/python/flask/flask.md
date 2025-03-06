@@ -577,10 +577,264 @@ Na versão gratuíta da plataforma, não é possível utilizar um disco de persi
 
 :::
 
-Pessoal, desta forma conseguimos realizar o deploy da nossa aplicação. Ela ainda pode ser melhorada com implementação de responsividade, melhoria na interface e na experiência do usuário. A seguir vamos realizar algumas comparações para utilizar a plataforma em conjunto com o robô 🤖.
+Pessoal, desta forma conseguimos realizar o deploy da nossa aplicação. Ela ainda pode ser melhorada com implementação de responsividade, melhoria na interface e na experiência do usuário. 
 
 
-## 7. Materiais extras de estudo
+## 7. Melhorando nossa aplicação
+
+Pessoal agora vamos considerar algumas coisas:
+
+- Por enquanto, toda nossa aplicação está em um arquivo só, já podemos desconfiar que essa arquitetura não parece escalar;
+- Ainda quanto o problema de estar com um arquivo fonte apenas, se mais de um desenvolvedor for trabalhar no arquivo, vamos precisar lidar com conflitos constantes na hora de unificar este arquivo;
+- Todo nosso código começa a ficar dificíl de ser reaproveitado.
+
+> Mas Murilão tem alguma ferramenta que podemos utilizar para resolver isso?
+
+Opa! Temos uma solução para isso sim! Podemos utilizar os `Blueprints` do próprio Flask! Vamos verificar como utilizar esse recurso. Para isso, vamos trabalhar com a seguinte aplicação:
+
+
+```python
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/calcular', methods=['POST'])
+def calculate():
+    data = request.get_json()
+    
+    if not data or 'num1' not in data or 'num2' not in data or 'operation' not in data:
+        return jsonify({'error': 'Campos inválidos'}), 400
+    
+    num1 = data.get('num1')
+    num2 = data.get('num2')
+    operation = data.get('operation')
+
+    if not isinstance(num1, (int, float)) or not isinstance(num2, (int, float)):
+        return jsonify({'error': 'Os valores devem ser números'}), 400
+    
+    result = None
+
+    if operation == 'add':
+        result = num1 + num2
+    elif operation == 'subtract':
+        result = num1 - num2
+    elif operation == 'multiply':
+        result = num1 * num2
+    elif operation == 'divide':
+        if num2 == 0:
+            return jsonify({'error': 'Divisão por zero não permitida'}), 400
+        result = num1 / num2
+    else:
+        return jsonify({'error': 'Operação inválida'}), 400
+
+    return jsonify({'num1': num1, 'num2': num2, 'operation': operation, 'result': result})
+
+
+@app.route('/convert', methods=['POST'])
+def convert():
+    data = request.get_json()
+
+    if not data or 'value' not in data or 'unit' not in data:
+        return jsonify({'error': 'Campos inválidos'}), 400
+    
+    value = data.get('value')
+    unit = data.get('unit').lower()
+
+    if not isinstance(value, (int, float)):
+        return jsonify({'error': 'O valor deve ser um número'}), 400
+
+    if unit == 'inches':
+        result = value * 25.4
+        new_unit = 'mm'
+    elif unit == 'mm':
+        result = value / 25.4
+        new_unit = 'inches'
+    else:
+        return jsonify({'error': 'Unidade inválida. Use "inches" ou "mm".'}), 400
+
+    return jsonify({'original_value': value, 'original_unit': unit, 'converted_value': result, 'converted_unit': new_unit})
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+```
+
+Aqui pessoal, temos algumas coisas para ver neste código:
+
+- Temos duas rotas na nossa aplicação: `/calcular` e `/convert`, ambas funcionam com requisições do tipo POST. Ambas funcionam recebendo os dados dentro do body enviados como JSON.
+- Aqui, ambos os métodos fazem algumas verificações para garantir que todos os parâmetros necessários para funcionar. Se estes parâmetros não estão presentes, o método retorna um erro para quem o invocou.
+- Nossa API recebe e envia dados no formato JSON.
+
+Agora vamos para os `Blueprints`.
+
+## 8. Blueprints - uma forma de dividir nossa aplicação
+
+Primeiro, vamos verficar a documentação dos Blueprints: [doc](https://flask.palletsprojects.com/en/stable/blueprints/). Um ponto muito importante para verificarmos:
+
+> "***The basic concept of blueprints is that they record operations to execute when registered on an application. Flask associates view functions with blueprints when dispatching requests and generating URLs from one endpoint to another.***"
+
+Este é o conceito da utilização dos blueprints: dividir a aplicação em partes menores e associar elas com a aplicação principal.
+
+Vamos agora utilizar este princípio para realizar a separação da nossa aplicação. Primeiro vamos criar mais dois diretórios da aplicação:
+
+```sh
+# Estrutura de Arquivos
+├── calculadora
+│   ├── calculadora.py
+│   └── __init__.py
+├── conversor
+│   ├── conversor.py
+│   └── __init__.py
+├── main.py
+└── venv
+
+```
+
+:::info[Arquivo __init__.py]
+
+Em Python, um diretório só é reconhecido como um pacote se ele contiver um arquivo __init__.py. Esse arquivo indica ao interpretador Python que o diretório deve ser tratado como um módulo, permitindo que seus arquivos sejam importados como parte do pacote.
+
+> Por que o __init__.py é necessário?
+
+- Identifica um diretório como um pacote – Sem ele, o Python não reconhecerá o diretório como um módulo importável.
+- Executa inicializações do pacote – Pode conter código de inicialização, como importações internas ou configuração de variáveis globais.
+- Organiza código modularmente – Facilita a estruturação de projetos grandes, dividindo funcionalidades em subpacotes.
+
+
+Dada a seguinte estrutura:
+
+```sh
+my_project/
+│── my_package/
+│   │── __init__.py
+│   │── module1.py
+│   │── module2.py
+```
+
+Com __init__.py presente, podemos fazer:
+
+```py
+from my_package import module1
+```
+
+Caso ele não existisse, o Python não reconheceria my_package como um pacote importável (exceto em versões mais recentes, onde os namespace packages foram introduzidos).
+
+> ***Curiosidade:***
+> Desde o Python 3.3, o __init__.py não é obrigatório para pacotes, mas sua presença ainda é recomendada para evitar ambiguidades e permitir personalizações. 🚀
+
+:::
+
+Vamos agora ajustar o arquivo ***calculadora.py***
+
+```python
+from flask import Blueprint, request, jsonify
+
+calculadora = Blueprint('calculadora', __name__,
+                        template_folder='templates',
+                        url_prefix='/calcular')
+
+
+@calculadora.route('/', methods=['POST'])
+def calculate():
+    data = request.get_json()
+    
+    if not data or 'num1' not in data or 'num2' not in data or 'operation' not in data:
+        return jsonify({'error': 'Campos inválidos'}), 400
+    
+    num1 = data.get('num1')
+    num2 = data.get('num2')
+    operation = data.get('operation')
+
+    if not isinstance(num1, (int, float)) or not isinstance(num2, (int, float)):
+        return jsonify({'error': 'Os valores devem ser números'}), 400
+    
+    result = None
+
+    if operation == 'add':
+        result = num1 + num2
+    elif operation == 'subtract':
+        result = num1 - num2
+    elif operation == 'multiply':
+        result = num1 * num2
+    elif operation == 'divide':
+        if num2 == 0:
+            return jsonify({'error': 'Divisão por zero não permitida'}), 400
+        result = num1 / num2
+    else:
+        return jsonify({'error': 'Operação inválida'}), 400
+
+    return jsonify({'num1': num1, 'num2': num2, 'operation': operation, 'result': result})
+
+```
+
+Pontos importantes para verificar neste código:
+- Blueprint('calculadora', __name__): Cria um Blueprint chamado "calculadora".
+- template_folder='templates': (Opcional) Define um diretório para templates (não usado neste código).
+- url_prefix='/calcular': Todas as rotas definidas dentro desse Blueprint terão /calcular como prefixo. Exemplo:O endpoint / definido no código será acessado como /calcular/.
+
+Agora vamos alterar o código ***conversor.py***:
+
+```py
+from flask import Blueprint, request, jsonify
+
+conversor = Blueprint('conversor', __name__,
+                        template_folder='templates',
+                        url_prefix='/convert')
+
+
+@conversor.route('/', methods=['POST'])
+def convert():
+    data = request.get_json()
+
+    if not data or 'value' not in data or 'unit' not in data:
+        return jsonify({'error': 'Campos inválidos'}), 400
+    
+    value = data.get('value')
+    unit = data.get('unit').lower()
+
+    if not isinstance(value, (int, float)):
+        return jsonify({'error': 'O valor deve ser um número'}), 400
+
+    if unit == 'inches':
+        result = value * 25.4
+        new_unit = 'mm'
+    elif unit == 'mm':
+        result = value / 25.4
+        new_unit = 'inches'
+    else:
+        return jsonify({'error': 'Unidade inválida. Use "inches" ou "mm".'}), 400
+
+    return jsonify({'original_value': value, 'original_unit': unit, 'converted_value': result, 'converted_unit': new_unit})
+
+```
+
+Repare que fizemos a mesma alteração que no ***calculadora.py***. Mas todo o conteúdo está relacionado ao módulo do conversor! Assim estamos com os dois módulos separados!!
+
+Vamos agora verificar como fica nosso ***main.py***:
+
+```py
+from flask import Flask
+from calculadora.calculadora import calculadora
+from conversor.conversor import conversor
+
+app = Flask(__name__)
+app.register_blueprint(calculadora)
+app.register_blueprint(conversor)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+```
+
+O que fizemos aqui é iniciar nossa aplicação e ligar os blueprints a ela! Denovo! Deixamos nossa aplicação:
+- Modular: estamos adicionando os blueprints que desejamos utilizar;
+- Reutilizavel: os módulos que construímos podemos reaproveitar e utilizar outros módulos no projeto, bastando adicionar este blueprint.
+
+Pessoal sugiro que vocês verifiquem e modifiquem este exemplo! Explorem como está abordagem pode ser utilizada para dar outra forma a nossas aplicações. Bons estudos pessoal!!
+
+
+## 9. Materiais extras de estudo
 
 Pessoal aqui vão alguns materiais de apoio que eu utilizei para construir este material:
 
