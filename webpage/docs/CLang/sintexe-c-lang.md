@@ -329,3 +329,241 @@ Legal, agora vamos falar sobre o operador de endereço `&`. Ele é usado para ob
 
 As estruturas de controle são utilizadas para controlar o fluxo da execução de um programa. Elas permitem que o programa tome decisões para seguir diferentes fluxos de execução dado o estado atual do programa. A linguagem C possui algumas estruturas de decisão, vamos avaliar elas aqui.
 
+```c
+// 03_estrutura_decisao.c
+#include <stdio.h>
+int main(){
+    int valor;
+    printf("Informe um valor: ");
+    scanf("%d", &valor);
+
+    if (valor > 0) {
+        printf("O valor é positivo.\n");
+    } else if (valor < 0) {
+        printf("O valor é negativo.\n");
+    } else {
+        printf("O valor é zero.\n");
+    }
+
+    return 0;
+}
+```
+
+Esse programa é bastante simples e bastante direto para sua utilização, depois de compilar e executar o programa, ele vai solicitar para o usuário informar um valor. Esse valor é armazenado na variável `valor`, que é um inteiro. Aqui vem a utilização das estruturas de decisão. A estrutura `if` verifica primeiro se o valor é maior que zero. Em caso afirmativo, o programa imprime "O valor é positivo." na tela. Se não for, ele verifica se o valor é menor que zero. Se for, o programa imprime "O valor é negativo.". Se nenhuma das condições anteriores for verdadeira, significa que o valor é zero, e o programa imprime "O valor é zero.". 
+
+Aqui cabe destacar o seguinte comportamento, apenas uma das condições será executada. Isso ocorre porque as estruturas de decisão são avaliadas sequencialmente. Assim que uma condição é verdadeira, o bloco de código correspondente é executado e o restante das condições é ignorado. É importante conhecer a forma como as estruturas de decisão são avaliadas para conseguir utilizá-las da melhor forma possível.
+
+Outro detalhe bastante importante: em C, não existe o conceito de "verdadeiro" e "falso" como em outras linguagens. Em vez disso, qualquer valor diferente de zero é considerado verdadeiro, enquanto zero é considerado falso. Isso significa que podemos usar expressões aritméticas diretamente nas condições das estruturas de decisão. Mas atenção, o ponto que é verdade é que o valor zero é falso, todo o restante é considerado verdadeiro. 
+
+Os operadores lógicos também são utilizados para combinar condições. Os operadores lógicos mais comuns são:
+
+| Operador | Descrição        | Exemplo                      |
+| -------- | ---------------- | ---------------------------- |
+| `<`      | Menor que        | `if (a < b) printf("sim");`  |
+| `>`      | Maior que        | `if (a > b) printf("sim");`  |
+| `<=`     | Menor ou igual a | `if (a <= b) printf("sim");` |
+| `>=`     | Maior ou igual a | `if (a >= b) printf("sim");` |
+| `==`     | Igual a          | `if (a == b) printf("sim");` |
+| `!=`     | Diferente de     | `if (a != b) printf("sim");` |
+
+
+:::tip[Operador Ternário]
+
+O operador ternário é uma forma concisa de escrever uma estrutura condicional simples. Ele tem a seguinte sintaxe:
+
+```c
+condição ? expressão_se_verdadeira : expressão_se_falsa;
+```
+
+Importante ficar claro que ele pode ser encadeado, mas utilizar esse recurso com cuidado, para não tornar o código mais difício de ler. Outro ponto importante para observar é que o operador ternário deve retornar um valor, ou seja, ele não deve ser usado para executar blocos de código como as estruturas `if` e `else`.
+
+:::
+
+
+Vamos ver um exemplo agora com mais uma estrutura de decisão, a `switch`. Ela é utilizada para avaliar uma expressão e executar um bloco de código correspondente ao valor da expressão. Vamos ver um exemplo:
+
+```c
+// 04_estrutura_switch.c
+#include <stdio.h>
+
+int main() {
+    int dia;
+    printf("Informe um número de 1 a 7 para o dia da semana: ");
+    scanf("%d", &dia);
+
+    switch (dia) {
+        case 1:
+            printf("Domingo\n");
+            break;
+        case 2:
+            printf("Segunda-feira\n");
+            break;
+        case 3:
+            printf("Terça-feira\n");
+            break;
+        case 4:
+            printf("Quarta-feira\n");
+            break;
+        case 5:
+            printf("Quinta-feira\n");
+            break;
+        case 6:
+            printf("Sexta-feira\n");
+            break;
+        case 7:
+        case 0: // Adicionando o caso 0 para o sábado também
+            printf("Sábado\n");
+            break;
+        default:
+            printf("Número inválido! Informe um número de 1 a 7.\n");
+    }
+
+    return 0;
+}
+```
+
+Pessoal aqui o ponto principal para se observar é a estrutura `switch`. Ela avalia a variável `dia` e executa o bloco de código correspondente ao valor dessa variável. Cada `case` representa um valor possível para a variável, e o bloco de código correspondente é executado se a variável tiver aquele valor. O `break` é usado para sair do `switch` após a execução do bloco de código correspondente. Se não houver um `break`, o programa continuará executando os blocos de código dos próximos `case`, até que ele encontre um `break` ou o final do `switch`, como é o caso do valor `7` e do valor `0` no nosso exemplo. O `default` é usado para tratar casos em que a variável não corresponde a nenhum dos valores especificados nos `case`. Ele é opcional, mas é uma boa prática incluí-lo para lidar com entradas inválidas.
+
+## 5. Estruturas de Repetição
+
+As estruturas de repetição são utilizadas para executar um bloco de código várias vezes, enquanto uma condição for verdadeira. Elas são úteis quando precisamos repetir uma ação várias vezes, como percorrer elementos de um array ou realizar cálculos iterativos. A linguagem C possui três estruturas de repetição principais: `for`, `while` e `do-while`. Vamos ver cada uma delas.
+
+```c
+// 05_estrutura_for.c
+
+#include <stdio.h>
+int main() {
+    int i;
+    printf("Contagem de 1 a 10:\n");
+    for (i = 1; i <= 10; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+Legal, aqui temos um exemplo de utilização da estrutura `for`. Ela composta por 3 partes principais:
+- Inicialização: `i = 1` é executada uma vez antes do início do loop. É onde definimos a variável de controle do loop.
+- Condição: `i <= 10` é verificada antes de cada iteração do loop. Se for verdadeira, o bloco de código dentro do loop é executado. Se for falsa, o loop termina.
+- Incremento: `i++` é executado após cada iteração do loop. É onde atualizamos a variável de controle do loop.
+
+Em geral, essa estrutura é utilizada quando sabemos o número de iterações que queremos realizar. No nosso exemplo, estamos contando de 1 a 10, então sabemos que o loop deve ser executado 10 vezes.
+
+Agora vamos ver um exemplo com a estrutura `while`.
+
+```c
+// 06_estrutura_while.c
+#include <stdio.h>
+
+int main() {
+    int i = 1;
+    printf("Contagem de 1 a 10:\n");
+    while (i <= 10) {
+        printf("%d ", i);
+        i++;
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+Aqui pessoal, o nosso exemplo é semelhante ao anterior, mas utilizando a estrutura `while`. Aqui a diferença é que a estrutura tem o funcionamento de repetir sua execução, enquanto a condição de teste for verdadeira. No nosso exemplo, a variável `i` é inicializada com o valor `1`, e o loop continua enquanto `i` for menor ou igual a `10`. Dentro do loop, imprimimos o valor de `i` e incrementamos `i` em `1`. Assim como no exemplo anterior, o loop será executado 10 vezes. Aqui uma observação importante, a variável de controle do loop pode ser alterada durante a sua execução, ele apenas será avaliada novamente quando o loop for executado novamente. Isso significa que se a condição de teste não for alterada, o loop pode se tornar infinito, ou seja, ele nunca vai terminar. Por isso é importante garantir que a condição de teste seja alterada dentro do loop, para evitar loops infinitos.
+
+A estrutura `while` tem uma característica interessante, ela pode ter seu bloco de código nunca executado. Isso acontece quando a condição de teste já é falsa antes do loop ser executado. Vamos ver um exemplo disso:
+
+```c
+// 07_estrutura_while_nunca_executado.c
+#include <stdio.h>
+
+int main() {
+    int i = 11; // Inicializando i com um valor maior que 10
+    printf("Contagem de 1 a 10:\n");
+    while (i <= 10) {
+        printf("%d ", i); // Este bloco nunca será executado
+        i++;
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+Aqui no momento que a condição de teste é avaliada, ela já é falsa, então o bloco de código dentro do loop nunca será executado. Isso é importante para se ter em mente, pois pode levar a comportamentos inesperados se não for tratado corretamente. Agora, vamos alterar esse programa para já verificarmos o funcionamento da estrutura `do-while`.
+
+```c
+// 08_estrutura_do_while.c
+#include <stdio.h>
+
+int main() {
+    int i = 11; // Inicializando i com um valor maior que 10
+    printf("Contagem de 1 a 10:\n");
+    do {
+        printf("%d ", i); // Este bloco será executado pelo menos uma vez
+        i++;
+    } while (i <= 10);
+    printf("\n");
+    return 0;
+}
+```
+
+Repare que aqui temos quase o mesmo código do exemplo anterior, mas agora estamos utilizando a estrutura `do-while`. A diferença é que o bloco de código dentro do `do` será executado pelo menos uma vez, mesmo que a condição de teste seja falsa. Isso significa que, mesmo que `i` seja inicializado com um valor maior que `10`, o programa ainda imprimirá o valor de `i` uma vez antes de verificar a condição de teste.
+
+:::danger[Uma palavra sobre o Goto]
+
+O `goto` em C desempenha um papel histórico e pragmático: ele oferece um salto incondicional para outra parte do código, o que em certas situações—como em rotinas de tratamento de erro ou em máquinas de estados muito simples—pode simplificar a lógica de limpeza de recursos (por exemplo, liberar memória ou fechar arquivos antes de sair de várias camadas de funções). Em programas de baixo nível, onde cada ciclo e cada instrução importam, o `goto` chega a ser útil para gerar código mais eficiente, evitando empilhamentos profundos de chamadas de função ou a repetição de blocos de limpeza em vários pontos de saída.
+
+No entanto, o uso indiscriminado de `goto` costuma gerar “código espaguete”: saltos espalhados tornam difícil entender o fluxo de execução, complicam a manutenção e aumentam a probabilidade de erros (como pular acidentalmente inicializações ou qualificações de variáveis). Por isso, a recomendação geral da comunidade é privilegiar construções de linguagem estruturadas—`if/else`, `for`, `while`, `switch`—e, para tratamento de erro, adotar padrões como código de retorno e blocos `cleanup` centralizados, evitando saltos arbitrários e preservando a clareza e robustez do software.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AKJhThyTmQw?si=rCrdfpBqxDgHnG6M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8bmEhtMVrhk?si=8w1g3NUJZWESi8eV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
+:::
+
+## 6. Funções
+
+Legal, até aqui falamos de programas bastante pequenos. Eles tem por objetivo nos auxiliar a compreender como a linguagem C funciona. Por que compreender isso é importante? Porque agora vamos ver um conceito que auxilia demais durante o desenvolvimento de programas mais complexos, ou ainda quando desejamos deixar nosso código mais modular e simples de se utilizar, as funções.
+
+De novo, ainda vamos continuar vendo programas pequenos, mas meu objetivo ao apresentar o conceito das funções é deixar claro para vocês que elas nos trazem bastante flexibilidade e organização no código. Vamos ver o exemplo de um programa que realiza as quatro operações matemáticas básicas (adição, subtração, multiplicação e divisão) utilizando funções.
+
+```c
+// 09_funcoes.c
+#include <stdio.h>
+// Função para somar dois números
+int somar(int a, int b) {
+    return a + b;
+}
+// Função para subtrair dois números
+int subtrair(int a, int b) {
+    return a - b;
+}
+// Função para multiplicar dois números
+int multiplicar(int a, int b) {
+    return a * b;
+}
+// Função para dividir dois números
+double dividir(int a, int b) {
+    if (b == 0) {
+        printf("Erro: Divisão por zero!\n");
+        return 0; // Retorna 0 em caso de divisão por zero
+    }
+    return (double)a / b;
+}
+
+int main() {
+    int num1, num2;
+    printf("Informe dois números inteiros:\n");
+    scanf("%d %d", &num1, &num2);
+
+    printf("Soma: %d\n", somar(num1, num2));
+    printf("Subtração: %d\n", subtrair(num1, num2));
+    printf("Multiplicação: %d\n", multiplicar(num1, num2));
+    printf("Divisão: %.2f\n", dividir(num1, num2));
+
+    return 0;
+}
+```
+
+Aqui tem bastante coisa acontecendo! Fiquem comigo para que possamos estudar essa sintaxe em conjunto! Vamos lá!
+
