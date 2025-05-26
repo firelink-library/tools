@@ -156,11 +156,16 @@ clang ola.c -o ola
 Pessoal deixei aqui mais algumas referências que eu acredito que podem ser úteis para vocês:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3pfRvy_gfqY?si=7yK01ZqhCWivgly6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YShlJiUntic?si=SCQLPNy8lyTfQ8dR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/afUiVvDUIRA?si=zh_y7dMU2vMbRLBB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/SNyh-cubxaU?si=QMFYNIkN0GxKpKn1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EFmxPMdBqmU?si=7Ry1bfAdNR7GDDh1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
