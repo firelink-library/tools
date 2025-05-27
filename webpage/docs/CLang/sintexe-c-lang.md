@@ -1218,8 +1218,131 @@ int main(void) {
 
 Com isso, você pode criar tanto uma única instância quanto coleções de structs em heap, controlando manualmente o tempo de vida dos objetos e evitando limitações de escopo de funções.
 
+## 12. Arquivos
 
-## 12. Referências
+Para finalizar nossa jornada, vamos falar sobre **arquivos**. Em C, podemos ler e escrever dados em arquivos usando funções da biblioteca `<stdio.h>`. Isso nos permite persistir dados entre execuções do programa, o que é essencial para muitas aplicações. Em C, todo acesso a arquivos em disco é feito via ponteiros do tipo `FILE*`. Isso nos permite **ler**, **escrever** e **navegar** em arquivos de texto ou binários, mantendo o código organizado e portátil.
+
+- Abrindo e fechando arquivos
+
+```c
+#include <stdio.h>
+
+FILE *f = fopen("arquivo.txt", "r");  // abre para leitura
+if (!f) {
+    perror("fopen");
+    return 1;
+}
+
+/* … uso de f … */
+
+fclose(f);  // fecha e libera recursos
+```
+
+* Modos comuns de abertura:
+
+  * `"r"`  – leitura (erro se não existir)
+  * `"w"`  – escrita (cria/trunca)
+  * `"a"`  – escrita em modo append
+  * `"r+"` – leitura/escrita sem truncar
+  * Acrescente `"b"` para arquivos binários (`"rb"`, `"wb"`, …).
+
+- Escrevendo em arquivos de texto
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    FILE *fw = fopen("saida.txt", "w");
+    if (!fw) { perror("fopen"); return 1; }
+
+    fprintf(fw, "ID: %d\nNome: %s\n", 42, "Fulano");
+    fprintf(fw, "Nota1: %.1f, Nota2: %.1f\n", 7.5, 8.0);
+
+    fclose(fw);
+    return 0;
+}
+```
+
+* **`fprintf`** funciona como `printf`, mas envia saída para o `FILE*`.
+
+- Lendo de arquivos de texto
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    FILE *fr = fopen("saida.txt", "r");
+    if (!fr) { perror("fopen"); return 1; }
+
+    int id;
+    char nome[50];
+    float n1, n2;
+
+    // lê valores formatados
+    if (fscanf(fr, "ID: %d\nNome: %49[^\n]\n", &id, nome) == 2) {
+        printf("Lido: %d - %s\n", id, nome);
+    }
+
+    // pula até o próximo par de notas
+    fscanf(fr, "Nota1: %f, Nota2: %f\n", &n1, &n2);
+    printf("Notas: %.1f, %.1f\n", n1, n2);
+
+    fclose(fr);
+    return 0;
+}
+```
+
+* **`fscanf`** funciona como `scanf` mas lê de um `FILE*`.
+* Para ler linhas inteiras (inclusive espaços), use **`fgets(buf, tamanho, fr)`**.
+
+- Arquivos binários
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int id;
+    float nota;
+} Registro;
+
+int main(void) {
+    Registro r = { 123, 9.5f };
+
+    // grava binário
+    FILE *fb = fopen("dados.bin", "wb");
+    if (!fb) { perror("fopen"); return 1; }
+    fwrite(&r, sizeof r, 1, fb);
+    fclose(fb);
+
+    // lê binário
+    FILE *fr = fopen("dados.bin", "rb");
+    if (!fr) { perror("fopen"); return 1; }
+    Registro r2;
+    if (fread(&r2, sizeof r2, 1, fr) == 1) {
+        printf("Registro lido: id=%d, nota=%.1f\n", r2.id, r2.nota);
+    }
+    fclose(fr);
+    return 0;
+}
+```
+
+* **`fwrite(ptr, tamanho, count, FILE*)`** e **`fread`** manipulam blocos de bytes, ideal para structs ou buffers de dados.
+
+- Movendo o cursor no arquivo
+
+* **`fseek(FILE *f, long offset, int whence)`**: desloca o ponteiro de leitura/escrita.
+
+  * `SEEK_SET` (início), `SEEK_CUR` (posição atual), `SEEK_END` (final).
+* **`ftell(FILE *f)`**: retorna posição atual (em bytes).
+* **`rewind(FILE *f)`**: volta ao início (`fseek(f, 0, SEEK_SET)`).
+
+---
+
+Com essas funções, você tem controle completo sobre como seus programas armazenam e recuperam dados de arquivos, seja em formato legível (texto) ou eficiente (binário), aproveitando alocação dinâmica e estruturas compostas conforme necessário.
+
+
+## 13. Referências
 
 - The C Book: [Link](https://publications.gbdirect.co.uk/c_book/)
 - C Programming Language (Kernighan & Ritchie): [Link](https://www.amazon.com.br/Programming-Language-2nd-Brian-Kernighan/dp/0131103628)
@@ -1232,3 +1355,112 @@ Com isso, você pode criar tanto uma única instância quanto coleções de stru
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/U3aXWizDbQ4?si=6CdYzgRBAlo2oIws" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
 <br />
+
+## 14. Exercícios
+
+Pessoal, aqui vou colocar alguns exercícios para vocês praticarem tudo que conversamos até aqui! Eles vão de nível básico até um pouco mais avançado!
+
+1. Soma de dois inteiros: Leia dois números inteiros do teclado e mostre sua soma.
+
+2. Produto de float e int: Leia um número real (float) e um inteiro, calcule e exiba o produto.
+
+3. Área de um círculo: Leia o raio (tipo double) de um círculo e calcule a área (π·r²), exibindo com duas casas decimais.
+
+4. Par ou ímpar: Leia um inteiro e informe se ele é par ou ímpar (usando if/else).
+
+5. Positivo, negativo ou zero: Leia um inteiro e diga se ele é positivo, negativo ou zero.
+
+6. Maior de três números: Leia três inteiros e determine qual deles é o maior (apenas com if/else).
+
+7. Conceito de nota: Leia uma nota (0–100) e atribua um conceito A/B/C/D/F segundo faixas predefinidas (ex.: ≥90 → A, ≥80 → B etc.).
+
+8. Nome do mês: Leia um número de 1 a 12 e imprima o nome do mês correspondente (use switch).
+
+9. Contagem até N: Leia um inteiro positivo N e imprima todos os números de 1 até N (laço for).
+
+10. Soma de 1 a N: Leia N e calcule a soma de todos os inteiros entre 1 e N (pode usar while ou for).
+
+11. Fatorial de N: Leia um inteiro N ≥ 0 e calcule seu fatorial usando um loop.
+
+12. Série de Fibonacci: Leia um inteiro N e imprima os primeiros N termos da sequência de Fibonacci (0, 1, 1, 2, 3…).
+
+13. Média de N valores: Leia N, depois leia N valores reais e exiba a média aritmética.
+
+14. Tabuada de um número: Leia um inteiro X e imprima sua tabuada de 1 a 10.
+
+15. Matriz e transposta: Leia o tamanho n (≤10), depois leia uma matriz quadrada n×n e mostre sua transposta.
+
+16. Função max(a,b): Implemente uma função int max(int a, int b) que retorne o maior de dois inteiros e use-a para comparar dois valores lidos.
+
+17. Função fatorial(n): Crie uma função long fatorial(int n) e utilize-a para mostrar o fatorial de um número lido.
+
+18. Função recursiva de Fibonacci: Escreva uma função recursiva int fib(int n) e exiba o n-ésimo termo lido do usuário.
+
+19. Verificador de número primo: Implemente uma função int eh_primo(int x) que retorne 1 se x for primo ou 0 caso contrário; depois, leia um valor N e liste todos os primos de 2 até N.
+
+20. Utilizando ponteiros: Crie um programa que leia um número inteiro e utilize ponteiros para calcular o dobro e o triplo desse número, exibindo os resultados.
+
+21. Alocação dinâmica de memória: Implemente um programa que leia N números inteiros, aloque dinamicamente um array para armazená-los e calcule a média desses números.
+
+22. Structs: Defina uma struct para representar um aluno (com nome, matrícula e nota) e implemente um vetor para armazenar vários alunos, permitindo adicionar, remover e listar alunos.
+
+A partir daqui os exercícios são um pouco mais robustos e exigem um pouco mais de reflexão, mas não se preocupe, você vai conseguir!
+
+23. Gerenciamento de Estoque de Loja com `struct` e Alocação Dinâmica
+
+Você vai implementar em C um **sistema de gerenciamento de estoque** para uma pequena loja, utilizando `struct` para representar cada produto e um **vetor dinâmico** para armazenar esses produtos em memória. Seu programa deverá prover um **menu interativo** com as seguintes funcionalidades mínimas:
+
+- **Definição das Estruturas**
+
+   * `typedef struct {  
+       int codigo;           // identificador único do produto  
+       char nome[50];        // nome do produto  
+       char categoria[30];   // categoria ou departamento  
+       float preco;          // preço unitário  
+       int quantidade;       // unidades em estoque  
+       int estoque_minimo;   // nível mínimo para reabastecimento  
+     } Produto;`
+   * Use um **vetor de `Produto`** alocado com `malloc`/`realloc`, de forma que seu programa possa crescer conforme novos itens sejam cadastrados.
+
+- **Menu de Operações**
+   Implemente um laço que exiba opções como:
+
+   ```
+   1) Cadastrar novo produto
+   2) Remover produto (por código)
+   3) Atualizar estoque (entrada/saída de mercadorias)
+   4) Listar todos produtos
+   5) Listar produtos abaixo do estoque mínimo
+   6) Consultar produto (por código ou nome)
+   7) Calcular valor total do estoque
+   0) Sair
+   ```
+
+   Cada opção deve chamar uma **função** específica, recebendo ponteiro para o vetor e seu tamanho atual, e retornar — se necessário — o novo tamanho (após remoções ou inclusões).
+
+- **Requisitos Funcionais**
+
+   * **Cadastrar produto**: ler todos os campos e inserir no fim do vetor (use `realloc` para expandi-lo).
+   * **Remover produto**: localizar pelo `codigo`, deslocar os elementos seguintes para “fechar o buraco” e reduzir o tamanho com `realloc`.
+   * **Atualizar estoque**: pedir código, ler quantidade (+ para entrada, – para saída) e ajustar `quantidade` mantendo-a ≥ 0.
+   * **Listagens**:
+
+     * **Todos os produtos**: exibir tabela com `codigo`, `nome`, `categoria`, `preco`, `quantidade`.
+     * **Estoque baixo**: listar apenas itens em que `quantidade < estoque_minimo`.
+   * **Consulta**: buscar por código (igual) ou nome (substring com `strstr`), exibindo detalhes completos.
+   * **Valor total do estoque**: somar, para cada produto, `preco * quantidade` e imprimir o resultado.
+
+- **Persistência (opcional, nível avançado)**
+
+   * Ao iniciar, ler um arquivo binário “estoque.dat” com a lista de produtos (`fread`).
+   * Ao sair, gravar o vetor atualizado em “estoque.dat” (`fwrite`), garantindo que, ao reiniciar, os dados anteriores sejam restaurados.
+
+- **Boas-práticas e Observações**
+
+   * Modularize seu código em funções com assinatura clara (use `typedef` para apelidar ponteiros a funções, se desejar).
+   * Verifique retornos de `malloc`/`realloc` e de operações de arquivo antes de usar os ponteiros.
+   * Use `->` apenas quando trabalhar com ponteiros para `Produto`; para o vetor, use notação `vet[i].campo`.
+   * Trate entradas inválidas (códigos não encontrados, quantidades negativas, limites de buffer em `scanf`).
+
+---
+
