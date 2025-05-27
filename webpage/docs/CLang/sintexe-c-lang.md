@@ -567,3 +567,668 @@ int main() {
 
 Aqui tem bastante coisa acontecendo! Fiquem comigo para que possamos estudar essa sintaxe em conjunto! Vamos lá!
 
+Primeiro vamos compreender como é a estrutura de uma função em C. Ela possui um anatomia própria, que é composta por:
+
+- Tipo de retorno: o tipo de dado que a função irá retornar. No nosso exemplo, as funções `somar`, `subtrair` e `multiplicar` retornam um `int`, enquanto a função `dividir` retorna um `double`.
+- Nome da função: o nome que será utilizado para chamar a função. No nosso exemplo, as funções são chamadas `somar`, `subtrair`, `multiplicar` e `dividir`.
+- Parâmetros: os valores que serão passados para a função. No nosso exemplo, as funções recebem dois parâmetros do tipo `int`, exceto a função `dividir`, que recebe dois parâmetros do tipo `int` e retorna um `double`.
+- Corpo da função: o bloco de código que será executado quando a função for chamada. No nosso exemplo, cada função possui um corpo que realiza a operação matemática correspondente e retorna o resultado.
+
+Aqui tem um ponto importante para se observar, as funções possuem uma forma específica de serem caracterizadas. Essa forma é chamada de assinatura da função. Analisando as assinaturas das funções que o compilador sabe que elas são diferentes, mesmo que os nomes sejam iguais. A assinatura de uma função é composta pelo nome da função, seu tipo de retorno e pelos tipos dos parâmetros. 
+
+As funções em C precisão ser declaradas antes de serem utilizadas. Isso significa que o compilador precisa conhecer a assinatura da função antes de encontrá-la no código. No nosso exemplo, as funções são declaradas antes da função `main`, o que permite que elas sejam chamadas dentro da função `main`. Também é possível declarar as funções após a função `main`, mas nesse caso precisamos utilizar uma declaração prévia da função, que é uma forma de informar ao compilador sobre a assinatura da função antes de sua definição. A declaração prévia é feita da seguinte forma:
+
+```c
+// Declaração prévia da função
+int somar(int a, int b);
+```
+
+> "Mas Murilão não é só declarar a função antes da `main` que já está tudo certo?"	
+
+Quando estamos trabalhando com apenas um arquivo fonte, é possível fazer isso. Mas quando trabalhamos com múltiplos arquivos fonte ou ainda quando estamos trabalhando com bibliotecas, é necessário utilizar a declaração prévia para informar ao compilador sobre a assinatura da função antes de sua definição. Isso é especialmente importante quando estamos trabalhando com cabeçalhos (`.h`) e arquivos de implementação (`.c`).
+
+Outro ponto importante é que as funções podem ser chamadas dentro de outras funções. No nosso exemplo, a função `main` chama as funções `somar`, `subtrair`, `multiplicar` e `dividir` para realizar as operações matemáticas. Isso permite que o código seja modularizado e organizado, facilitando a manutenção e a leitura do código. Quando vamos utilizar uma função, é importante passar os parâmetros corretos para ela. No nosso exemplo, as funções recebem dois parâmetros do tipo `int`, que são os números que serão utilizados nas operações matemáticas. Quando chamamos a função, passamos os valores das variáveis `num1` e `num2` como argumentos.
+
+Podemos sobrecarregar funções em C, ou seja, podemos ter várias funções com o mesmo nome, mas com assinaturas diferentes. Vamos ver um exemplo disso:
+
+```c
+// 09_funcoes_overload.c
+#include <stdio.h>
+// Função para somar dois inteiros
+int somar(int a, int b) {
+    return a + b;
+}
+// Função para somar dois números de ponto flutuante
+double somar(double a, double b) {
+    return a + b;
+}
+// Função para somar três inteiros
+int somar(int a, int b, int c) {
+    return a + b + c;
+}
+int main() {
+    int num1 = 5, num2 = 10, num3 = 15;
+    double num4 = 2.5, num5 = 3.5;
+
+    printf("Soma de dois inteiros: %d\n", somar(num1, num2));
+    printf("Soma de dois números de ponto flutuante: %.2f\n", somar(num4, num5));
+    printf("Soma de três inteiros: %d\n", somar(num1, num2, num3));
+
+    return 0;
+}
+```
+
+Aqui temos um exemplo de sobrecarga de funções. Temos três funções chamadas `somar`, mas cada uma tem uma assinatura diferente. A primeira função recebe dois parâmetros do tipo `int`, a segunda recebe dois parâmetros do tipo `double` e a terceira recebe três parâmetros do tipo `int`. Quando chamamos a função `somar`, o compilador escolhe a função correta com base nos tipos dos argumentos passados. Isso permite que possamos utilizar o mesmo nome de função para realizar operações diferentes, dependendo dos tipos dos parâmetros.
+
+Vamos avançar mais com o uso de funções assim que avançarmos um pouco mais com a sintaxe do C.
+
+## 7. Arrays
+
+Legal, agora temos vários elementos base para construir nossos programas. Vamos analisar agora alguns outros elementos que vão permitir que nossos programas implementem alguns outros comportamentos mais complexos. Primeiro vamos analisar os arrays. Eles são utilizados como uma forma de armazenar diferentes valores do mesmo tipo na memória de forma contígua. Isso significa que os valores são armazenados em posições de memória adjacentes, o que permite acessar os valores de forma rápida e eficiente. Vamos ver um exemplo de como declarar e utilizar um array em C.
+
+```c
+// 10_arrays.c
+#include <stdio.h>
+int main() {
+    int numeros[5]; // Declara um array de inteiros com 5 elementos
+    printf("Informe 5 números inteiros:\n");
+
+    // Lê os valores do usuário e armazena no array
+    for (int i = 0; i < 5; i++) {
+        scanf("%d", &numeros[i]);
+    }
+
+    // Exibe os valores armazenados no array
+    printf("Os números informados foram:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", numeros[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+```
+
+Aqui temos bastante a observar! Primeiro, a declaração do array `numeros[5]` cria um array de inteiros com 5 elementos. Os arrays em C são indexados a partir de zero, ou seja, o primeiro elemento do array está na posição `0`, o segundo elemento está na posição `1`, e assim por diante. Isso significa que o último elemento do array `numeros` está na posição `4`, podemos dizer que a última posição de um array de `N` posições será `N-1`.
+
+Agora vamos pensar sobre como acessar os elementos do array. No nosso exemplo, utilizamos um loop `for` para ler os valores do usuário e armazená-los no array. A variável `i` é usada como índice para acessar cada elemento do array. Quando chamamos `numeros[i]`, estamos acessando o elemento na posição `i` do array `numeros`. 
+
+Os arrays podem ser multidimensionais, ou seja, podemos ter arrays com mais de uma dimensão. Isso é útil para representar matrizes ou tabelas de dados. Vamos ver um exemplo de como declarar e utilizar um array bidimensional em C.
+
+```c
+// 11_arrays_multidimensionais.c
+#include <stdio.h>
+int main() {
+    int matriz[3][3]; // Declara um array bidimensional de inteiros 3x3
+    printf("Informe os valores para a matriz 3x3:\n");
+
+    // Lê os valores do usuário e armazena na matriz
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("Elemento [%d][%d]: ", i, j);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+
+    // Exibe os valores armazenados na matriz
+    printf("A matriz informada é:\n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+```
+
+Um prática bastante comum quando trabalhamos com arrays multidimensionais é utilizar loops aninhados para percorrer os elementos do array. No nosso exemplo, utilizamos dois loops `for` para ler os valores do usuário e armazená-los na matriz. O primeiro loop percorre as linhas da matriz, enquanto o segundo loop percorre as colunas. Quando acessamos um elemento da matriz, usamos a sintaxe `matriz[i][j]`, onde `i` é o índice da linha e `j` é o índice da coluna.
+
+Os arrays podem ser utilizados como um tipo de dados enviado para funções. Isso permite que possamos passar um array como argumento para uma função e manipular seus valores dentro da função. Vamos ver um exemplo de como fazer isso:
+
+```c
+// 12_funcoes_com_arrays.c
+#include <stdio.h>
+// Função para calcular a média de um array de inteiros
+double calcular_media(int numeros[], int tamanho) {
+    int soma = 0;
+    for (int i = 0; i < tamanho; i++) {
+        soma += numeros[i];
+    }
+    return (double)soma / tamanho;
+}
+
+int main() {
+    int numeros[5];
+    printf("Informe 5 números inteiros:\n");
+
+    // Lê os valores do usuário e armazena no array
+    for (int i = 0; i < 5; i++) {
+        scanf("%d", &numeros[i]);
+    }
+
+    // Calcula a média dos números informados
+    double media = calcular_media(numeros, 5);
+    printf("A média dos números informados é: %.2f\n", media);
+
+    return 0;
+}
+```
+
+Aqui temos um exemplo de como passar um array como argumento para uma função. A função `calcular_media` recebe um array de inteiros e o tamanho do array como parâmetros. Dentro da função, utilizamos um loop `for` para calcular a soma dos elementos do array e, em seguida, retornamos a média dos valores. No `main`, lemos os valores do usuário e chamamos a função `calcular_media` passando o array `numeros` e o tamanho do array como argumentos.
+
+:::danger[Arrays não são dinâmicos]
+
+Por padrão, os arrays em C têm tamanho fixo, ou seja, o tamanho do array é definido no momento da declaração e não pode ser alterado durante a execução do programa. Isso significa que precisamos ter cuidado ao trabalhar com arrays, para evitar acessar posições de memória fora dos limites do array, o que pode levar a comportamentos inesperados ou até mesmo a falhas de segmentação (segmentation fault).
+
+Para trabalhar com arrays de tamanho dinâmico, podemos utilizar alocação dinâmica de memória, que veremos mais adiante. Por enquanto, é importante lembrar que os arrays em C são de tamanho fixo e precisamos ter cuidado ao acessá-los para evitar erros.
+
+:::
+
+:::danger[Arrays não podem ser retornados por funções]
+
+Em C, não é possível retornar um array diretamente de uma função. Isso ocorre porque os arrays são tratados como ponteiros para o primeiro elemento do array, e retornar um ponteiro para um array pode levar a comportamentos inesperados. Em vez disso, podemos passar o array como argumento para a função e manipular seus valores dentro da função, ou ainda podemos retornar um ponteiro para o primeiro elemento do array alocado dinamicamente.
+
+:::
+
+Agora vamos ver um tipo de dado interessante para trabalhar com arrays, as strings.
+
+## 8. Strings
+
+Em C, não existe um tipo de dado específico para strings como em outras linguagens. Em vez disso, as strings são representadas como arrays de caracteres (`char`). Uma string é um array de caracteres que termina com o caractere nulo (`'\0'`), que indica o final da string. Vamos ver um exemplo de como declarar e utilizar uma string em C.
+
+```c
+// 13_strings.c
+#include <stdio.h>
+int main() {
+    char nome[50]; // Declara uma string com tamanho máximo de 49 caracteres + 1 para o caractere nulo
+    printf("Informe seu nome: ");
+    scanf("%49s", nome); // Lê uma string do usuário, limitando a 49 caracteres
+
+    printf("Olá, %s!\n", nome); // Exibe a string informada pelo usuário
+
+    return 0;
+}
+```
+
+Aqui temos um exemplo de como declarar e utilizar uma string em C. A string `nome` é declarada como um array de caracteres com tamanho máximo de 50, o que permite armazenar até 49 caracteres mais o caractere nulo (`'\0'`). Utilizamos a função `scanf` para ler a string do usuário, limitando a entrada a 49 caracteres para evitar overflow. Em seguida, exibimos a string informada pelo usuário utilizando o especificador `%s`. Outra forma de fazer essa leitura é utilizando a função `fgets`, que permite ler uma linha inteira, incluindo espaços em branco, até encontrar um caractere de nova linha (`'\n'`) ou atingir o tamanho máximo especificado.
+
+```c
+// 14_strings_fgets.c
+#include <stdio.h>
+int main() {
+    char nome[50]; // Declara uma string com tamanho máximo de 49 caracteres + 1 para o caractere nulo
+    printf("Informe seu nome: ");
+    fgets(nome, sizeof(nome), stdin); // Lê uma linha inteira do usuário
+
+    printf("Olá, %s", nome); // Exibe a string informada pelo usuário
+
+    return 0;
+}
+```
+
+Aqui utilizamos a função `fgets` para ler uma linha inteira do usuário, incluindo espaços em branco. A função `fgets` lê até o tamanho máximo especificado (neste caso, 50 caracteres) ou até encontrar um caractere de nova linha (`'\n'`). É importante lembrar que a função `fgets` inclui o caractere de nova linha na string lida, então, se necessário, podemos removê-lo manualmente.
+
+```c
+// 15_strings_remover_nova_linha.c
+#include <stdio.h>
+#include <string.h>
+int main() {
+    char nome[50]; // Declara uma string com tamanho máximo de 49 caracteres + 1 para o caractere nulo
+    printf("Informe seu nome: ");
+    fgets(nome, sizeof(nome), stdin); // Lê uma linha inteira do usuário
+
+    // Remove o caractere de nova linha, se presente
+    nome[strcspn(nome, "\n")] = '\0';
+
+    printf("Olá, %s!\n", nome); // Exibe a string informada pelo usuário
+
+    return 0;
+}
+```
+
+Aqui utilizamos a função `strcspn` para encontrar a posição do caractere de nova linha na string e substituí-lo por um caractere nulo (`'\0'`), efetivamente removendo o caractere de nova linha da string. Outro ponto é a utiliza''cão da biblioteca `<string.h>`, que contém funções úteis para manipulação de strings, como `strcpy`, `strlen`, `strcmp`, entre outras.
+
+| Função                                                  | Descrição                                                                              | Exemplo de uso                                                                |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `size_t strlen(const char *s)`                          | Retorna o número de caracteres antes do `'\0'` em `s`.                                 | `char s[] = "Olá"; printf("%zu\n", strlen(s)); // 3\n`                    |
+| `char *strcpy(char *dest, const char *src)`             | Copia a string `src` (incluindo `'\0'`) para `dest`.                                   | `char a[10]; strcpy(a, "Mundo"); // a == "Mundo"\n`                      |
+| `char *strncpy(char *dest, const char *src, size_t n)`  | Copia até `n` caracteres de `src` para `dest` (sem garantia de `'\0'` se `src` \>= `n`). | `char a[5]; strncpy(a, "ABCDEFG", 4); a[4] = '\0'; // "ABCD"\n`         |
+| `char *strcat(char *dest, const char *src)`             | Concatena `src` ao fim de `dest` (deve haver espaço suficiente).                       | `char a[20] = "Hello, "; strcat(a, "World!"); // a == "Hello, World!"\n` |
+| `char *strncat(char *dest, const char *src, size_t n)`  | Concatena até `n` caracteres de `src` ao fim de `dest`.                                | `char a[20] = "123"; strncat(a, "456789", 3); // a == "123456"\n`        |
+| `int strcmp(const char *s1, const char *s2)`            | Compara lexicograficamente `s1` e `s2`; retorna \<0, 0, \>0.                             | `printf("%d\n", strcmp("A", "B")); // \<0\n`                                |
+| `int strncmp(const char *s1, const char *s2, size_t n)` | Compara até `n` caracteres de `s1` e `s2`.                                             | `printf("%d\n", strncmp("ABC", "ABD", 2)); // 0\n`                         |
+| `char *strchr(const char *s, int c)`                    | Retorna ponteiro para a primeira ocorrência de `c` em `s`, ou `NULL`.                  | `char *p = strchr("banana", 'n'); // p aponta para "nana"\n`              |
+| `char *strrchr(const char *s, int c)`                   | Retorna ponteiro para a última ocorrência de `c` em `s`, ou `NULL`.                    | `char *p = strrchr("banana", 'a'); // p aponta para "a"\n`                |
+| `char *strstr(const char *hay, const char *ndl)`        | Retorna ponteiro para a primeira substring `ndl` em `hay`, ou `NULL`.                  | `char *p = strstr("foobar", "oba"); // p aponta para "obar"\n`            |
+
+:::danger[Strings não são arrays de caracteres]
+
+Cuidado, strings não são arrays de caracteres! Elas são representadas como arrays de caracteres, mas possuem um comportamento diferente. As strings em C são terminadas com o caractere nulo (`'\0'`), que indica o final da string. Isso significa que, ao trabalhar com strings, precisamos ter cuidado para não acessar posições de memória fora dos limites da string, o que pode levar a comportamentos inesperados ou até mesmo a falhas de segmentação (segmentation fault).
+
+:::
+
+## 9. Ponteiros
+
+Legal, até aqui vimos funções e arrays, conceitos que já nos permitem modularizar e armazenar coleções de dados. Mas C oferece um recurso ainda mais poderoso: os **ponteiros**, que são variáveis cujo valor é um endereço de memória. Por que entender ponteiros é importante? Porque, com eles, podemos:
+
+* **Passar grandes estruturas** (arrays, structs) para funções sem copiar todo o conteúdo.
+* **Manipular diretamente** a memória e construir estruturas dinâmicas (listas encadeadas, árvores).
+* **Controlar a alocação dinâmica** de memória com `malloc` e `free`, criando buffers em tempo de execução.
+
+De novo, vamos continuar com um programa pequeno, mas que ilustra vários usos de ponteiros. Veja um exemplo que troca valores, percorre um array com aritmética de ponteiros e imprime uma string literal:
+
+```c
+// 13_ponteiros.c
+#include <stdio.h>
+
+// Função que troca dois inteiros via ponteiros
+void trocar(int *a, int *b) {
+    int temp = *a;  // lê valor apontado por 'a'
+    *a = *b;        // escreve valor apontado por 'b' em *a
+    *b = temp;      // grava temp em *b
+}
+
+int main(void) {
+    int x = 10, y = 20;
+    int *px = &x;   // px aponta para x
+    int *py = &y;   // py aponta para y
+
+    printf("Antes: x = %d, y = %d\n", x, y);
+    trocar(px, py); // passando endereços de x e y
+    printf("Depois: x = %d, y = %d\n", x, y);
+
+    // Percorrendo um array com ponteiro
+    int arr[] = {1, 2, 3, 4, 5};
+    int *p = arr;  // 'arr' decai para &arr[0]
+    printf("Array: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", *(p + i)); // aritmética de ponteiro
+    }
+    printf("\n");
+
+    // Imprimindo string literal via ponteiro
+    char *s = "Olá, Mundo!";
+    printf("String: %s\n", s);
+
+    return 0;
+}
+```
+
+Aqui cada ponteiro tem um papel:
+
+* `int *px = &x;` e `int *py = &y;`
+  Declaramos ponteiros para `int` e inicializamos com `&`, obtendo o endereço das variáveis `x` e `y`.
+* Na função `trocar(int *a, int *b)`, os parâmetros são ponteiros. Dentro dela, usamos `*a` e `*b` para **ler** e **escrever** nos endereços passados, alterando `x` e `y` na chamada.
+* `int *p = arr;` faz “decair” o array para um ponteiro ao primeiro elemento. Na expressão `*(p + i)`, somamos `i` ao ponteiro (avançamos `i` elementos) e depois desreferenciamos com `*`.
+* `char *s = "Olá, Mundo!";` aponta para a primeira posição de uma string literal. O `%s` do `printf` percorre esse bloco até encontrar o caractere `'\0'`.
+
+A sintaxe de ponteiros em C envolve:
+
+* **Declaração**: `tipo *nome` (por exemplo, `int *p;`).
+* **Operador `&`**: obtém o endereço de uma variável (ex.: `&x`).
+* **Operador `*`**: desreferencia um ponteiro, acessando o valor apontado (ex.: `*p`).
+* **Aritmética de ponteiros**: `p + n` anda `n` posições do tipo apontado por `p`.
+
+:::danger[Cuidados com ponteiros]
+
+Ponteiros são poderosos, mas também perigosos. Aqui estão alguns cuidados importantes:
+* **Inicialização**: sempre inicialize ponteiros antes de usá-los. Ponteiros não inicializados podem apontar para locais aleatórios na memória, causando comportamento indefinido.
+* **Acesso fora dos limites**: nunca acesse memória além do que foi alocado. Isso pode corromper dados ou causar falhas de segmentação.
+* **Liberação de memória**: se você alocar memória dinamicamente com `malloc`, sempre libere com `free` para evitar vazamentos de memória.
+* **Ponteiros nulos**: verifique se um ponteiro é nulo antes de desreferenciá-lo. Acessar um ponteiro nulo resulta em comportamento indefinido.
+* **Evite ponteiros pendentes**: após liberar memória, evite usar o ponteiro que apontava para ela. Isso é conhecido como ponteiro pendente (dangling pointer) e pode levar a erros difíceis de depurar.
+
+:::
+
+Legal, falamos de alguns usos dos ponteiros, mas sempre acho que um exemplo visual facilita bastante nosso entendimento de como esses elementos são utilizados. Os ponteiros são tipos de variáveis especiais, pois o que eles armazenam não são outros valores, mas sim endereços de memória. 
+
+<img src="https://www.cse.unr.edu/~sushil/class/cs202/notes/pointers/pointers/ptr1.gif" alt="Uso de ponteiros" style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }} />
+<br />
+
+Quando observamos a imagem, podemos ver que as variáveis `ptr`, `num1` e `num2` ocupam as posições de memória `0500`, `0600` e `0604`, respectivamente. O ponteiro `ptr` armazena o endereço de memória da variável `num1`, que é `0600`. Quando desreferenciamos o ponteiro `ptr` com `*ptr`, estamos acessando o valor armazenado na posição de memória `0600`.
+
+Um outro ponto bastante interessante de se observar é que os nomes das funções também são ponteiros. Quando declaramos uma função, o nome da função é um ponteiro para o endereço de memória onde a função está armazenada. Isso significa que podemos passar o nome da função como argumento para outra função, ou ainda podemos armazenar o endereço da função em um ponteiro de função. Vamos ver um exemplo disso:
+
+```c
+// extra_funcoes.c
+#include <stdio.h>
+// Função que recebe um ponteiro para uma função
+void executar_funcao(void (*funcao)()) {
+    funcao(); // Chama a função passada como argumento
+}
+// Função que será passada como argumento
+void minha_funcao() {
+    printf("Executando minha_funcao!\n");
+}
+int main() {
+    // Passa o nome da função como argumento
+    executar_funcao(minha_funcao);
+    return 0;
+}
+```
+
+Aqui temos um exemplo de como passar o nome de uma função como argumento para outra função. A função `executar_funcao` recebe um ponteiro para uma função que não recebe parâmetros e não retorna valor (`void (*funcao)()`). Dentro da função, chamamos a função passada como argumento. No `main`, passamos o nome da função `minha_funcao` como argumento para `executar_funcao`, que executa a função.
+
+Agora vamos ver uma utilização poderoza dos ponteiros, que a alocação dinâmica de memória. Ela permite que nossos programas solicitem memória para o sistema operacional em tempo de execução! Mas para isso, precisamos compreender primeiro alguns tipos de memória que nossos programas utilizam.
+
+## 10. Alocação dinâmica de memória
+
+Para compreendermos a alocação dinâmica, precisamos entender os diferentes tipos de memória que nossos programas utilizam. Em C, a memória é dividida em quatro áreas principais:
+1. ***Text Segment (ou Code Segment)***: Contém o código executável do programa (as instruções compiladas). Geralmente é somente-leitura e compartilhado entre processos que usam o mesmo binário.
+2. ***Data Segment***:
+    - **Initialized Data**: armazena variáveis globais e estáticas que você inicializa explicitamente.
+    - **Uninitialized Data (BSS - Block Store by Symbol)**: armazena variáveis globais e estáticas não inicializadas (ou inicializadas a zero).
+3. ***Heap***: Área de memória usada para alocação dinâmica em tempo de execução. Cresce “para cima” (endereços aumentam) conforme você chama malloc(), calloc() ou realloc(). Você deve liberar esses blocos manualmente com free(), caso contrário ocorre memory leak.
+4. **Stack**: Área de memória usada para variáveis locais e contextos de chamada (frames de função). Cresce “para baixo” (endereços diminuem) cada vez que você entra em uma função, e é liberado automaticamente ao retornar. Tamanho limitado; ultrapassar chamando funções recursivas demais ou alocando arrays locais enormes pode causar stack overflow.
+
+<img src="https://d8it4huxumps7.cloudfront.net/uploads/images/66267d4a18f3e_memory_allocation_process.jpg?d=2000x2000" alt="Regiões de Memória" style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }} />
+<br />
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2htbIR2QpaM?si=2yMVv3hIfh3Dixh4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
+
+:::tip[Tamanho do Heap]
+
+O heap de um programa C não é “infinito” – ele está sujeito a várias camadas de limite, que podem ser configuradas ou impostas pelo sistema operacional e pela própria arquitetura do processo:
+
+1. **Espaço de endereçamento virtual**
+
+   * Em **processos de 32 bits**, o heap só consegue crescer dentro dos \~3 GiB (ou \~2 GiB, em algumas configurações) de espaço virtual disponíveis por processo.
+   * Em **processos de 64 bits**, o espaço virtual é tão grande (até exabytes) que, na prática, o limite passa a ser ditado pela memória física + swap + políticas do SO.
+
+2. **Limites do sistema operacional**
+
+   * No Linux/Unix, cada processo carrega um limite em bytes de “address space” definido por `RLIMIT_AS`. Você pode ver e ajustar esse valor com o shell:
+
+     ```bash
+     # mostra o limite atual (em kilobytes)
+     ulimit -v
+     # remove qualquer limite
+     ulimit -v unlimited
+     # limita o virtual memory a 1 GiB
+     ulimit -v $((1024*1024))
+     ```
+   * Via **code**, é possível usar `setrlimit()` (em `<sys/resource.h>`) para abaixar ou erigir limites de heap/virtual antes de chamar `malloc()`.
+
+3. **Cgroups e containers**
+
+   * Em ambientes Linux modernos (Docker, systemd, Kubernetes), você pode agrupar processos em um cgroup e impor um máximo de memória (RAM + swap). Se o programa exceder esse limite, o kernel mata o processo (OOM).
+   * Exemplos de configuração em `/sys/fs/cgroup/memory/.../memory.limit_in_bytes`.
+
+4. **Políticas de Overcommit e Page-file (Windows)**
+
+   * No Windows, o heap é limitado pelo tamanho do arquivo de paginação (“page file”) e pelas políticas de commit do sistema. Também é possível criar **Job Objects** e definir um máximo de memória virtual ou física para o conjunto de processos do Job.
+
+5. **Configurações do allocador**
+
+   * Muitos allocators (ptmalloc, jemalloc, tcmalloc) expõem variáveis de ambiente ou funções (`mallopt`, `je_*`) para controlar comportamento de arenas, zonas de mmap, threshold de liberação de memória, etc. Isso afeta performance e fragmentação, mas não altera o teto imposto pelo SO.
+
+---
+
+**Resumo**
+
+* **Limite prático** = min( espaço de endereçamento, RLIMIT\_AS, memória física+swap, políticas de overcommit/cgroup/job ).
+* **Configurável** via:
+
+  * `ulimit -v` / `setrlimit(RLIMIT_AS)` no Unix,
+  * cgroups em Linux moderno,
+  * configurações de page file e Job Objects no Windows,
+  * parâmetros do próprio allocator (mallopt, variáveis de ambiente).
+
+:::
+
+Legal, vamos bastante, mas cade um código para gente ver? Vamos lá!
+
+Vamos ver um exemplo de alocação dinâmica de memória em C. Neste exemplo, vamos criar um programa que lê uma quantidade variável de números inteiros do usuário e os armazena em um array alocado dinamicamente.
+
+```c
+// 14_alocacao_dinamica.c
+#include <stdio.h>
+#include <stdlib.h> // Necessário para malloc e free
+int main() {
+    int n;
+    printf("Quantos números você deseja informar? ");
+    scanf("%d", &n);
+
+    // Aloca memória dinamicamente para um array de inteiros
+    int *numeros = (int *)malloc(n * sizeof(int));
+    if (numeros == NULL) {
+        printf("Erro ao alocar memória!\n");
+        return 1; // Retorna 1 em caso de erro
+    }
+
+    // Lê os valores do usuário e armazena no array
+    printf("Informe %d números inteiros:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &numeros[i]);
+    }
+
+    // Exibe os valores armazenados no array
+    printf("Os números informados foram:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", numeros[i]);
+    }
+    printf("\n");
+
+    // Libera a memória alocada
+    free(numeros);
+
+    return 0;
+}
+```
+
+Aqui temos um exemplo de alocação dinâmica de memória. Utilizamos a função `malloc` para alocar memória para um array de inteiros com tamanho `n`, que é lido do usuário. A função `malloc` retorna um ponteiro para o início da memória alocada, que armazenamos na variável `numeros`. É importante verificar se a alocação foi bem-sucedida, verificando se o ponteiro retornado é diferente de `NULL`. Se a alocação falhar, exibimos uma mensagem de erro e retornamos um código de erro.
+Depois de ler os valores do usuário e armazená-los no array, exibimos os valores armazenados. Por fim, utilizamos a função `free` para liberar a memória alocada, evitando vazamentos de memória.
+
+:::danger[Alocação dinâmica de memória]
+
+A alocação dinâmica de memória é uma ferramenta poderosa, mas deve ser usada com cuidado. Aqui estão alguns pontos importantes a serem lembrados:
+* **Verifique se a alocação foi bem-sucedida**: sempre verifique se o ponteiro retornado por `malloc` não é `NULL`. Se for, significa que a alocação falhou e você deve tratar esse erro adequadamente.
+* **Libere a memória alocada**: sempre libere a memória alocada com `free` quando não precisar mais dela. Isso evita vazamentos de memória, que podem levar a um consumo excessivo de memória e, eventualmente, a falhas do programa.
+* **Cuidado com ponteiros pendentes**: após liberar a memória, evite usar o ponteiro que apontava para ela. Isso é conhecido como ponteiro pendente (dangling pointer) e pode levar a erros difíceis de depurar.
+
+:::
+
+Um último ponto importante sobre a alocação dinâmica de memória é que ela não precisa alocar apenas arrays. Podemos alocar qualquer tipo de dado, incluindo structs e outros tipos definidos pelo usuário. Mas além disso, ela não precisa alocar memória contígua, ou seja, podemos alocar blocos de memória de tamanhos diferentes e armazenar os ponteiros para esses blocos em um array ou lista. Isso nos permite criar estruturas de dados dinâmicas, como listas encadeadas, pilhas e filas.
+
+## 11. Structs
+
+Até aqui vimos como organizar dados simples (variáveis), coleções de dados homogêneos (arrays) e modularizar funções e acessar memória com ponteiros. Mas muitos problemas do mundo real exigem representar **objetos compostos**, com diversos campos de tipos diferentes — pense em um **ponto 2D** (x, y), em um **aluno** (nome, matrícula, notas) ou em um **nó de lista encadeada** (valor, próximo). É aí que entram as **structs**, que nos permitem agrupar múltiplos membros sob um único nome.
+
+```c
+// Definição de uma struct sem typedef
+struct Ponto {
+    int x;
+    int y;
+};
+
+int main(void) {
+    // Declaração de variável do tipo struct Ponto
+    struct Ponto p1;
+    p1.x = 10;
+    p1.y = 20;
+    printf("Ponto p1: (%d, %d)\n", p1.x, p1.y);
+    return 0;
+}
+```
+
+No exemplo acima, `struct Ponto` cria um novo **tipo composto** com dois campos `int`. Para simplificar a sintaxe, podemos usar `typedef`:
+
+```c
+// Definindo um alias com typedef
+typedef struct {
+    int x;
+    int y;
+} Ponto;
+
+// Agora podemos declarar direto:
+int main(void) {
+    Ponto p2 = { .x = 5, .y = 15 }; // inicialização por designador
+    printf("Ponto p2: (%d, %d)\n", p2.x, p2.y);
+    return 0;
+}
+```
+
+### Exemplos de uso
+
+1. **Array de structs**
+   Agrupar vários registros em um único vetor.
+
+   ```c
+   typedef struct {
+       char nome[50];
+       int idade;
+   } Pessoa;
+
+   Pessoa sala[3] = {
+       { "Alice", 20 },
+       { "Bruno", 22 },
+       { "Carla", 19 }
+   };
+   // Acessando:
+   printf("%s tem %d anos\n", sala[1].nome, sala[1].idade);
+   ```
+
+2. **Ponteiro para struct e alocação dinâmica**
+   Útil quando o número de elementos só é conhecido em tempo de execução.
+
+   ```c
+   Pessoa *grupo = malloc(n * sizeof *grupo);
+   if (!grupo) exit(1);
+   // Preenchendo:
+   strcpy(grupo[0].nome, "Diego");
+   grupo[0].idade = 21;
+   // …
+   free(grupo);
+   ```
+
+3. **Struct aninhada**
+   Podemos ter structs dentro de structs para modelar hierarquias.
+
+   ```c
+   typedef struct {
+       int dia, mes, ano;
+   } Data;
+
+   typedef struct {
+       char titulo[100];
+       Data lancamento;
+       float nota;
+   } Filme;
+
+   Filme f = {
+       "Meu Filme",
+       { .dia = 1, .mes = 7, .ano = 2025 },
+       8.5f
+   };
+   printf("%s (%02d/%02d/%04d): %.1f\n",
+          f.titulo, f.lancamento.dia, f.lancamento.mes,
+          f.lancamento.ano, f.nota);
+   ```
+
+---
+
+Com as **structs**, você organiza dados relacionados de forma elegante e sem perder a eficiência de C. O uso de `typedef` torna o código mais legível, eliminando a necessidade de escrever `struct` a todo momento. Em programas maiores, structs formam a base para criar **listas encadeadas**, **árvores**, **hash tables** e outras estruturas dinâmicas que habilitam sistemas complexos e modulares.
+
+Quando você tem um **ponteiro** para uma `struct`, o operador `->` é a forma mais direta de acessar seus campos, equivalendo a `(*ponteiro).campo` mas com sintaxe mais limpa.
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    int id;
+    char nome[20];
+} Aluno;
+
+int main(void) {
+    Aluno a = { .id = 123, .nome = "Maria" };
+    Aluno *pa = &a;  // ponteiro para a struct
+
+    // Acesso via operador '->'
+    printf("Aluno %d: %s\n", pa->id, pa->nome);
+    // equivale a:
+    // printf("Aluno %d: %s\n", (*pa).id, (*pa).nome);
+
+    return 0;
+}
+```
+
+* **Declaração**: `Aluno *pa = &a;` faz `pa` apontar para `a`.
+* **Uso de `->`**: `pa->id` lê `a.id`; `pa->nome` lê `a.nome`.
+
+---
+
+Para criar instâncias de `struct` em tempo de execução, usamos o **heap** com `malloc` e liberamos com `free`. Assim, não ficamos restritos ao escopo de variáveis locais:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    int id;
+    char nome[20];
+} Aluno;
+
+int main(void) {
+    // Aloca um único struct Aluno
+    Aluno *pa = malloc(sizeof *pa);
+    if (!pa) {
+        perror("malloc falhou");
+        return 1;
+    }
+
+    // Preenche via ponteiro e '->'
+    pa->id = 456;
+    strcpy(pa->nome, "João");
+
+    printf("Aluno alocado: %d - %s\n", pa->id, pa->nome);
+
+    free(pa);  // devolve memória ao heap
+
+    // Alocando um vetor de 3 structs Aluno
+    size_t n = 3;
+    Aluno *vet = malloc(n * sizeof *vet);
+    if (!vet) {
+        perror("malloc falhou");
+        return 1;
+    }
+
+    // Inicialização simples
+    for (size_t i = 0; i < n; i++) {
+        vet[i].id = i + 1;
+        snprintf(vet[i].nome, sizeof vet[i].nome, "Aluno%zu", i + 1);
+    }
+
+    // Impressão
+    for (size_t i = 0; i < n; i++) {
+        printf("vet[%zu]: %d - %s\n", i, vet[i].id, vet[i].nome);
+    }
+
+    free(vet);  // libera o array de structs
+    return 0;
+}
+```
+
+* **`malloc(sizeof *pa)`**: aloca exatamente o tamanho de `*pa` (mais seguro contra mudanças de tipo).
+* **`free(pa)`**: liberta a memória alocada.
+* No **vetor**, usamos `vet[i].campo`; poderíamos também usar `(vet + i)->campo` para ilustrar novamente o `->`.
+
+Com isso, você pode criar tanto uma única instância quanto coleções de structs em heap, controlando manualmente o tempo de vida dos objetos e evitando limitações de escopo de funções.
+
+
+## 12. Referências
+
+- The C Book: [Link](https://publications.gbdirect.co.uk/c_book/)
+- C Programming Language (Kernighan & Ritchie): [Link](https://www.amazon.com.br/Programming-Language-2nd-Brian-Kernighan/dp/0131103628)
+- Linguagem C, completa e descomplicada: [Link](https://www.amazon.com.br/Linguagem-C-ANDR%C3%89-BACKES/dp/8535291067/ref=sr_1_1?dib=eyJ2IjoiMSJ9.FO_0tltZNLAHMWWsdEODmYVp488WvSOlFBNaLbkLZF0.oGpnIcLDADUw2ckSwxtWHfohb7X34caELPu8JAt7fJg&dib_tag=se&keywords=c+completo+e+descomplicado&qid=1748338536&sr=8-1&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678)
+- Introdução à programação com a linguagem C: [Link](https://www.amazon.com.br/Introdu%C3%A7%C3%A3o-Programa%C3%A7%C3%A3o-com-Linguagem-Problemas/dp/8575224859/ref=sr_1_2?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3IQ65V7OA8AD4&dib=eyJ2IjoiMSJ9.tAXgIoOizXb9qgL6gnCgOWXy-9dMzqpMHcpn16yQzjifCTyLkJpLnlUJ0F0GsaI1Vv3tSlTw01Tr6m3LY1Usy_5YWlQcpNr4nOh0V6wzezBZSWX9d9QRu7YWWA6Owq1ZRgkBjpFYUzqd9BCoWruMr8t6PEP23Bp8fTojGyLGlXKGxE0HrpxOROfYUd7KxyxPXR0KZb6IjbH7WEEM53_GnKDOjO6Tgs1qD6zbZ8_S45oF20K4p_5kwSi_Ar3c3fOPlaB22XXpxrRFs9HNzmuBNUaDS36flHcCozIxA4Qvd3Y.qDM0VbKMlXnxdRntqH_XVMcLgL-zY1_ena_znvOGTmI&dib_tag=se&keywords=Introdu%C3%A7%C3%A3o+%C3%A0+programa%C3%A7%C3%A3o+com+a+linguagem+C&qid=1748338587&sprefix=c+completo+e+descomplicado%2Caps%2C227&sr=8-2&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9)
+- Use a cabeça! C: [Link](https://www.amazon.com.br/Use-cabe%C3%A7a-C-David-Griffiths/dp/8576087944/ref=sr_1_2?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2KY9X2P4MY2L4&dib=eyJ2IjoiMSJ9.GaaDwrfW2ltm_27Wwu6rY_4f27RcUzr_yPRcOnpKTvuliIXBtrJUknDPqRPz4wObaNQfPOWCgkSbAg9uV0PAlAHzU6lXermE7RDnDJIXTTLMQYVA3NKjhy7IPpSALsgW7xH9tskcLaqZsiDZMabdewIvxo20E4UpWhV2-A51piVjpCG08X5TSJOUcTjVlK7RBcsT8Yfmy-qaMl4Gcsfg3TpD7ISNhgAQ-123Wp1L51OSmbQ3WJcuJcLEMM77i5eTgwVkbWvMZJE6A9T6qftoWcaMePTvVA3bQu5wYEkgSmw.daVuf2czEKGddp1T2EkZKEvy65RWgfezWuWMond8_GQ&dib_tag=se&keywords=use+a+cabe%C3%A7a+c&qid=1748338625&sprefix=use+a+cabeca+%2Caps%2C264&sr=8-2) 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Gp2m8ZuXoPg?si=WpWgAsIFv0LVfiZ-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/U3aXWizDbQ4?si=6CdYzgRBAlo2oIws" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }}></iframe>
+<br />

@@ -25,7 +25,7 @@ Vamos avaliar algumas coisas antes de iniciarmos nosso estudo. Primeiro vamos co
 
 Primeiro, as pessoas programadoras faziam seus programas em cartões perfurados, isso em 1800, la na industria têxtil. Cada um dos furos dizia para os teares programáveis onde eles deveriam fazer os pontos de costura, os cartões eram lidos e interpretados pelo tear.
 
-<img src="https://www.stylourbano.com.br/wp-content/uploads/2017/02/TEAR-JACQUARD-min.jpg" alt="Cartões perfurados na industria têxtil" style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }} />>
+<img src="https://www.stylourbano.com.br/wp-content/uploads/2017/02/TEAR-JACQUARD-min.jpg" alt="Cartões perfurados na industria têxtil" style={{ display: 'block', marginLeft: 'auto', maxHeight: '40vh', marginRight: 'auto', marginBottom: '24px' }} />
 <br />
 
 Deste princípio, em 1840, Charles Babbage propos o primeiro computador mecânico capaz de ler cartões perfurados e realizar cálculos matemáticos. Ele nunca foi construído devido a complexidade necessária e os elevados custos. Sua ideia serviu de base para que em 1842, Ada Lovelace escrevesse o primeiro algoritmo de computador, que poderia ser executado neste computador mecânico.
