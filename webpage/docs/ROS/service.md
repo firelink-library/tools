@@ -12,7 +12,7 @@ import Admonition from '@theme/Admonition';
 
 ## 1. Serviços
 
-![](/gifs/servico.gif)
+![servico_gif](/gifs/servico.gif)
 
 [fonte](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html)
 
