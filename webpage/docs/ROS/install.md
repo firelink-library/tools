@@ -9,6 +9,23 @@ import TabItem from '@theme/TabItem';
 
 # Instalação do ROS
 
+:::warning Aviso
+
+A instalação descrita neste artigo está **desatualizada**. Por favor, siga 
+um dos tutoriais abaixo:
+
+* [ROS Jazzy Jalisco](https://docs.ros.org/en/jazzy/Installation.html) é a última versão que utilizamos em um módulo do 
+Inteli. Ele é compatível com o **Ubuntu 24.04**.
+* [ROS Kilted Kaiju](https://docs.ros.org/en/kilted/Installation.html) é a
+versão mais nova disponível. Compatível com **Ubuntu 24.04**. Pode ser que tenha
+problemas de compatibilidade com o *Turtlebot* ou o *Unitree GO2*. Se for
+instalar esse, me conte se tiver algum problema.
+* [ROS Rolling Ridley](https://docs.ros.org/en/rolling/Installation.html) é a versão *rolling release* do ROS. Se você não se
+importa com instabilidade e não quer mais ter que atualizar versões de ROS, use
+esse.
+
+:::
+
 Para instalar o ROS, podemos seguir de duas formas distintas:
 
 1. A forma fácil, usando meu script de instalação automática; ou
